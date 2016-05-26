@@ -137,15 +137,187 @@ export IPYTHON_ENV=/home/tanmay/.virtualenvs/ipython/
 # enabled ls aliases line 91-93
 alias workoff='deactivate'
 workon calm
-alias epsilon_start='supervisord -c /home/tanmay/Codebases/lambda/conf/supervisord.conf'
-alias epsilon_status='supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf status'
-alias epsilon_stop='supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf shutdown'
-alias epsilon_restart='supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf restart'
 
-alias calm_start='supervisord -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf'
-alias calm_status='supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf status'
-alias calm_stop='supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf shutdown'
-alias calm_restart='supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf restart'
+# epsilon functions
+alias ep_boot='supervisord -c /home/tanmay/Codebases/lambda/conf/supervisord.conf'
+ep_start() {
+    if [ -z "$1" ]; then
+        echo "Starting all..."
+        supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf start all
+        return 0
+    fi
+
+    if [ "$1" == "-h" ]; then
+        echo "Usage: ep_start [service_pattern1] ... [service_patternN]"
+        return 1
+    fi
+
+    to_grep=$(echo $@|sed 's/ /\\\|/g')
+    to_kill=$(supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+
+    if [ ! -z "$to_kill" ]; then
+        for k in $to_kill; do 
+            supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf start $k;
+        done
+    fi
+}
+
+ep_status() {
+    if [ -z "$1" ]; then
+        echo "Fetching status for all..."
+        supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf status all
+        return 0
+    fi
+
+    if [ "$1" == "-h" ]; then
+        echo "Usage: ep_status [service_pattern1] ... [service_patternN]"
+        return 1
+    fi
+
+    to_grep=$(echo $@|sed 's/ /\\\|/g')
+    to_kill=$(supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+
+    if [ ! -z "$to_kill" ]; then
+        for k in $to_kill; do 
+            supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf status $k;
+        done
+    fi
+}
+
+ep_stop() {
+    if [ -z "$1" ]; then
+        echo "Stopping all..."
+        supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf stop all
+        return 0
+    fi
+
+    if [ "$1" == "-h" ]; then
+        echo "Usage: ep_stop [service_pattern1] ... [service_patternN]"
+        return 1
+    fi
+
+    to_grep=$(echo $@|sed 's/ /\\\|/g')
+    to_kill=$(supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+
+    if [ ! -z "$to_kill" ]; then
+        for k in $to_kill; do 
+            supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf stop $k;
+        done
+    fi
+}
+alias ep_shutdown='supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf shutdown'
+ep_restart() {
+    if [ -z "$1" ]; then
+        echo "Restarting all..."
+        supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf restart all
+        return 0
+    fi
+
+    if [ "$1" == "-h" ]; then
+        echo "Usage: ep_restart [service_pattern1] ... [service_patternN]"
+        return 1
+    fi
+
+    to_grep=$(echo $@|sed 's/ /\\\|/g')
+    to_kill=$(supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+
+    if [ ! -z "$to_kill" ]; then
+        for k in $to_kill; do 
+            supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf restart $k;
+        done
+    fi
+}
+
+
+# calm functions
+alias c_boot='supervisord -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf'
+c_start() {
+    if [ -z "$1" ]; then
+        echo "Starting all..."
+        supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf start all
+        return 0
+    fi
+
+    if [ "$1" == "-h" ]; then
+        echo "Usage: c_start [service_pattern1] ... [service_patternN]"
+        return 1
+    fi
+
+    to_grep=$(echo $@|sed 's/ /\\\|/g')
+    to_kill=$(supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+
+    if [ ! -z "$to_kill" ]; then
+        for k in $to_kill; do 
+            supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf start $k;
+        done
+    fi
+}
+
+c_status() {
+    if [ -z "$1" ]; then
+        echo "Fetching status for all..."
+        supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf status all
+        return 0
+    fi
+
+    if [ "$1" == "-h" ]; then
+        echo "Usage: c_status [service_pattern1] ... [service_patternN]"
+        return 1
+    fi
+
+    to_grep=$(echo $@|sed 's/ /\\\|/g')
+    to_kill=$(supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+
+    if [ ! -z "$to_kill" ]; then
+        for k in $to_kill; do 
+            supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf status $k;
+        done
+    fi
+}
+
+c_stop() {
+    if [ -z "$1" ]; then
+        echo "Stopping all..."
+        supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf stop all
+        return 0
+    fi
+
+    if [ "$1" == "-h" ]; then
+        echo "Usage: c_stop [service_pattern1] ... [service_patternN]"
+        return 1
+    fi
+
+    to_grep=$(echo $@|sed 's/ /\\\|/g')
+    to_kill=$(supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+
+    if [ ! -z "$to_kill" ]; then
+        for k in $to_kill; do 
+            supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf stop $k;
+        done
+    fi
+}
+alias c_shutdown='supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf shutdown'
+c_restart() {
+    if [ -z "$1" ]; then
+        echo "Restarting all..."
+        supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf restart all
+        return 0
+    fi
+
+    if [ "$1" == "-h" ]; then
+        echo "Usage: c_restart [service_pattern1] ... [service_patternN]"
+        return 1
+    fi
+
+    to_grep=$(echo $@|sed 's/ /\\\|/g')
+    to_kill=$(supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+
+    if [ ! -z "$to_kill" ]; then
+        for k in $to_kill; do 
+            supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf restart $k;
+        done
+    fi
+}
 
 alias vimbashrc='vim ~/.bashrc && source $_'
 PATH=$PATH:/sbin:/bin:/usr/sbin
