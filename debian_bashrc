@@ -137,9 +137,11 @@ export IPYTHON_ENV=/home/tanmay/.virtualenvs/ipython/
 # enabled ls aliases line 91-93
 alias workoff='deactivate'
 workon calm
+# workon hackathone
 
 # epsilon functions
-alias ep_boot='supervisord -c /home/tanmay/Codebases/lambda/conf/supervisord.conf'
+alias ep_boot='supervisord -c /home/tanmay/Codebases/lambda/conf/supervisord.conf && sleep 2 &&
+    ep_status'
 ep_start() {
     if [ -z "$1" ]; then
         echo "Starting all..."
@@ -322,7 +324,7 @@ c_restart() {
 alias upload_wfs='find ~/Codebases/calm-workflows/ -name "*.wf"|xargs epdb.py import --replace'
 alias c_build_ui='cd /calm/src/calm/client/styx && ./styx --build && cd -'
 alias vimbashrc='vim ~/.bashrc && source $_'
-PATH=$PATH:/sbin:/bin:/usr/sbin
+export PATH=$PATH:/sbin:/bin:/usr/sbin
 
 # aws ec2 credentials 
 export AWS_ACCESS_KEY=AKIAJ7QDAICRTDQYFKEA
@@ -338,7 +340,7 @@ function v_tunnel {
 }
 
 function to_mac {
-    scp -i ~/Documents/mac.pem "$1"  mustang@mac:~/
+    scp -i ~/Documents/mac.pem "$1"  tanmay.kakkar@mac:~/
 }
 
 find_in_js() {
@@ -396,5 +398,5 @@ stty start undef
 
 # go 1.6.2 setup
 export GOPATH=$HOME/.go
-export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin:/usr/local/go/bin
 
