@@ -1,0 +1,45 @@
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+stty susp undef
+bind '"\C-z":"fg\015"'
+# bind -x '"\M-z"':"fg" # ALT+Z
+PATH=$PATH:$HOME/bin
+
+export PATH
+
+export DISTCC_HOSTS="--randomize distcc-0/24 distcc-1/24"
+export CCACHE_DIR=$HOME/.ccache
+export TOP=$HOME/Codebases/main
+export WORKSPACE_DIR=$TOP/..
+export PYTHONPATH=$PYTHONPATH:$TOP/.python
+export PYTHONUSERBASE=$TOP/.python
+cd $TOP
+
+SSH_ENV="$HOME/.ssh/environment"
+ 
+function start_agent {
+echo "Initialising new SSH agent..."
+/usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+chmod 600 "${SSH_ENV}"
+. "${SSH_ENV}" > /dev/null
+/usr/bin/ssh-add ~/.ssh/id_rsa_dev_vm;
+}
+ 
+# Source SSH settings, if applicable
+ 
+if [ -f "${SSH_ENV}" ]; then
+    . "${SSH_ENV}" > /dev/null
+    #ps ${SSH_AGENT_PID} doesn't work under cywgin
+    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+    start_agent;
+}
+else
+    start_agent;
+fi
