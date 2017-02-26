@@ -326,10 +326,6 @@ alias c_build_ui='cd /calm/src/calm/client/styx && ./styx --build && cd -'
 alias vimbashrc='vim ~/.bashrc && source $_'
 export PATH=$PATH:/sbin:/bin:/usr/sbin
 
-# aws ec2 credentials 
-export AWS_ACCESS_KEY=AKIAJ7QDAICRTDQYFKEA
-export AWS_SECRET_KEY=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
-
 export JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64/jre'
 export EC2_HOME='/usr/local/ec2/ec2-api-tools-1.7.5.1'
 export PATH=$PATH:$EC2_HOME/bin 
