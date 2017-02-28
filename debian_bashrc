@@ -122,6 +122,9 @@ source "/usr/share/virtualenvwrapper/virtualenvwrapper.sh"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+# nucalm epsilon
+export EPSILON=$HOME/Codebases/epsilon
+
 # arc
 export arcpath=$HOME/Sources/arc 
 export PATH=${arcpath}/arcanist/bin:$PATH
@@ -330,7 +333,6 @@ export JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64/jre'
 export EC2_HOME='/usr/local/ec2/ec2-api-tools-1.7.5.1'
 export PATH=$PATH:$EC2_HOME/bin 
 
-export DOCKER_HOST=tcp://localhost:2375
 function v_tunnel {
     sudo ssh -L 0.0.0.0:7331:10.0.7.10:7331 -L 0.0.0.0:5480:10.0.7.10:5480  -L 0.0.0.0:9443:10.0.7.10:9443 -L 0.0.0.0:443:10.0.7.10:443 calmdev@demo.calm.io -i ~/.ssh/vmware_id_rsa
 }
@@ -369,6 +371,43 @@ find_in_wf() {
         return 0
     fi
     find $1 -name '*.wf'|xargs grep "$2"
+}
+
+add_port_idf_container() {
+    port=$(curl "http://localhost:2027" --silent|grep "Entity Types"|egrep -o 'https?://[^ ]+'|cut -d':' -f3|cut -d'/' -f1)
+    container_id=$(docker ps |grep opscalm/idf|awk '{print $1}')
+    ~/Container_Port_forward_script.sh $container_id $port
+}
+
+start_idf_container() {
+    container_id=$(docker ps |grep opscalm/idf|awk '{print $1}')
+    if [ "$container_id" = "" ]; then
+        docker run -dt -p 2027:2027 opscalm/idf
+        sleep 45
+        # curl --connect-timeout 5 \
+        #      --max-time 10 \
+        #      --retry 5 \
+        #      --retry-delay 0 \
+        #      --retry-max-time 60 \
+        #      'http://localhost:2027'
+        add_port_idf_container
+        return 0
+    else
+        echo "Already running"
+        return 1
+    fi
+}
+
+stop_idf_container() {
+    docker ps |grep opscalm/idf|awk '{print $1}'|xargs docker rm -f
+}
+
+restart_idf_container() {
+    # delete existing container
+    stop_idf_container
+
+    # start new container
+    start_idf_container
 }
 
 alias time_sync='sudo ntpdate pool.ntp.org'
