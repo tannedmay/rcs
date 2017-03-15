@@ -327,11 +327,10 @@ c_restart() {
 alias upload_wfs='find ~/Codebases/calm-workflows/ -name "*.wf"|xargs epdb.py import --replace'
 alias c_build_ui='cd /calm/src/calm/client/styx && ./styx --build && cd -'
 alias vimbashrc='vim ~/.bashrc && source $_'
+alias list_my_branches="git for-each-ref --format=' %(authorname) %09 %(refname)'|grep Tanmay|grep remote"
 export PATH=$PATH:/sbin:/bin:/usr/sbin
 
 export JAVA_HOME='/usr/lib/jvm/java-7-openjdk-amd64/jre'
-export EC2_HOME='/usr/local/ec2/ec2-api-tools-1.7.5.1'
-export PATH=$PATH:$EC2_HOME/bin 
 
 function v_tunnel {
     sudo ssh -L 0.0.0.0:7331:10.0.7.10:7331 -L 0.0.0.0:5480:10.0.7.10:5480  -L 0.0.0.0:9443:10.0.7.10:9443 -L 0.0.0.0:443:10.0.7.10:443 calmdev@demo.calm.io -i ~/.ssh/vmware_id_rsa
@@ -416,7 +415,7 @@ bind '"\ez":"fg\015"'
 
 
 # extra
-export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/usr/local/go/bin:/calm/bin
 
 # to make ctrl+ctrl+s work in vim
 # http://vim.wikia.com/wiki/Map_Ctrl-S_to_save_current_or_new_files` 
