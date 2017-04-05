@@ -1,0 +1,168 @@
+# If you come from bash you might have to change your $PATH.
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+# Path to your oh-my-zsh installation.
+export ZSH=/home/tanmay/.oh-my-zsh
+
+# virtualenvwrapper
+export WORKON_HOME=$HOME/.virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh
+
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="agnoster"
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(sudo git virtualenv virtualenvwrapper python ubuntu autopep8 pip supervisor zsh-syntax-highlighting zsh-256color alias-tips)
+
+source $ZSH/oh-my-zsh.sh
+workon calm
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias time_sync='sudo ntpdate pool.ntp.org'
+alias upload_wfs='find ~/Codebases/calm-workflows/ -name "*.wf"|xargs epdb.py import --replace'
+alias vimzshrc='vim ~/.zshrc && source $_'
+alias list_my_branches="git for-each-ref --format=' %(authorname) %09 %(refname)'|grep Tanmay|grep remote"
+alias workoff='deactivate'
+
+# custom functions 
+find_in_js() {
+    if [ "$#" -eq 1 ]; then
+        find ./ -name '*.js*'|xargs grep "$1"
+        return 0
+    fi
+    find $1 -name '*.js*'|xargs grep "$2"
+}
+
+find_in_python() {
+    if [ "$#" -eq 1 ]; then
+        find ./ -name '*.py'|xargs grep "$1"
+        return 0
+    fi
+    find $1 -name '*.py'|xargs grep "$2"
+}
+
+find_in_java() {
+    if [ "$#" -eq 1 ]; then
+        find ./ -name '*.java'|xargs grep "$1"
+        return 0
+    fi
+    find $1 -name '*.java'|xargs grep "$2"
+}
+
+find_in_wf() {
+    if [ "$#" -eq 1 ]; then
+        find ./ -name '*.wf'|xargs grep "$1"
+        return 0
+    fi
+    find $1 -name '*.wf'|xargs grep "$2"
+}
+
+add_port_idf_container() {
+    port=$(curl "http://localhost:2027" --silent|grep "Entity Types"|egrep -o 'https?://[^ ]+'|cut -d':' -f3|cut -d'/' -f1)
+    container_id=$(docker ps |grep opscalm/idf|awk '{print $1}')
+    echo "Adding port forwarding at port" $port
+    ipaddress=$(docker inspect $container_id|grep '"IPAddress":' -m 1|grep -P '[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*' -o)
+    sudo iptables -t nat -A  DOCKER -p tcp --dport $port -j DNAT --to-destination $ipaddress:$port
+}
+
+start_idf_container() {
+    container_id=$(docker ps |grep opscalm/idf|awk '{print $1}')
+    if [ "$container_id" = "" ]; then
+        docker run -dt -p 2027:2027 opscalm/idf
+        sleep 45
+        # curl --connect-timeout 5 \
+        #      --max-time 10 \
+        #      --retry 5 \
+        #      --retry-delay 0 \
+        #      --retry-max-time 60 \
+        #      'http://localhost:2027'
+        add_port_idf_container
+        return 0
+    else
+        echo "Already running"
+        return 1
+    fi
+}
+
+stop_idf_container() {
+    docker ps |grep opscalm/idf|awk '{print $1}'|xargs docker rm -f
+}
+
+restart_idf_container() {
+    # delete existing container
+    stop_idf_container
+
+    # start new container
+    start_idf_container
+}
+
