@@ -7,7 +7,6 @@ export ZSH=$HOME/.oh-my-zsh
 # virtualenvwrapper
 export WORKON_HOME=$HOME/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
-source /usr/local/bin/virtualenvwrapper.sh
 export GOPATH=$HOME/.go
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
@@ -20,6 +19,9 @@ if [ $HOST = "tanmay-kakkar" ]; then
     export TOP=~/Codebases/main
     export DISTCC_HOSTS="--randomize distcc-0/24 distcc-1/24"
     export CCACHE_DIR=$HOME/.ccache
+    source /usr/bin/virtualenvwrapper.sh
+else
+    source /usr/local/bin/virtualenvwrapper.sh
 fi
 
 # Set name of the theme to load. Optionally, if you set this to "random"
