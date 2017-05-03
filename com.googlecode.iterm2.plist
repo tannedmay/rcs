@@ -262,12 +262,14 @@
 	</data>
 	<key>NSTableView Supports v2 KeyBingingTable</key>
 	<true/>
+	<key>NSWindow Frame SessionsPreferences</key>
+	<string>269 139 606 456 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>309 365 796 473 0 0 1440 900 </string>
+	<string>309 326 796 473 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>161 80 570 452 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>176 74 570 452 0 0 1440 900 </string>
+	<string>176 74 570 452 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>197 47 570 452 0 0 1440 900 </string>
 	<key>NeverWarnAboutShortLivedSessions_243550B1-E106-445E-98FA-24F9474BDE29</key>
@@ -896,7 +898,7 @@
 			<key>Transparency</key>
 			<real>0.0</real>
 			<key>Unlimited Scrollback</key>
-			<false/>
+			<true/>
 			<key>Use Bold Font</key>
 			<true/>
 			<key>Use Bright Bold</key>
@@ -1113,7 +1115,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>ssh nutanix@tanmay-kakkar.dev.eng.nutanix.com</string>
+			<string>ssh -i ~/Documents/Keys/dev_vm.pem nutanix@tanmay-kakkar.dev.eng.nutanix.com</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -1536,7 +1538,7 @@
 			<key>Transparency</key>
 			<real>0.0</real>
 			<key>Unlimited Scrollback</key>
-			<false/>
+			<true/>
 			<key>Use Bold Font</key>
 			<true/>
 			<key>Use Bright Bold</key>
@@ -2174,7 +2176,7 @@
 			<key>Transparency</key>
 			<real>0.0</real>
 			<key>Unlimited Scrollback</key>
-			<false/>
+			<true/>
 			<key>Use Bold Font</key>
 			<true/>
 			<key>Use Bright Bold</key>
@@ -2808,7 +2810,7 @@
 			<key>Transparency</key>
 			<real>0.0</real>
 			<key>Unlimited Scrollback</key>
-			<false/>
+			<true/>
 			<key>Use Bold Font</key>
 			<true/>
 			<key>Use Bright Bold</key>
@@ -2881,7 +2883,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-04-18T17:05:17Z</date>
+	<date>2017-04-19T17:27:40Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>WordCharacters</key>

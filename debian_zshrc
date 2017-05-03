@@ -154,7 +154,7 @@ add_port_idf_container() {
     port=$(curl "http://localhost:2027" --silent|grep "Entity Types"|egrep -o 'https?://[^ ]+'|cut -d':' -f3|cut -d'/' -f1)
     container_id=$(docker ps |grep opscalm/idf|awk '{print $1}')
     echo "Adding port forwarding at port" $port
-    ipaddress=$(docker inspect $container_id|grep '"IPAddress":' -m 1|grep -P '[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*' -o)
+    ipaddress=$(docker inspect $container_id|grep '"IPAddress":' -m 1|grep '[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*' -o)
     sudo iptables -t nat -A  DOCKER -p tcp --dport $port -j DNAT --to-destination $ipaddress:$port
 }
 
