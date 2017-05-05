@@ -7,7 +7,6 @@ export ZSH=$HOME/.oh-my-zsh
 # virtualenvwrapper
 export WORKON_HOME=$HOME/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
-source /usr/local/bin/virtualenvwrapper.sh
 export GOPATH=$HOME/.go
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
@@ -20,6 +19,9 @@ if [ $HOST = "tanmay-kakkar" ]; then
     export TOP=~/Codebases/main
     export DISTCC_HOSTS="--randomize distcc-0/24 distcc-1/24"
     export CCACHE_DIR=$HOME/.ccache
+    source /usr/bin/virtualenvwrapper.sh
+else
+    source /usr/local/bin/virtualenvwrapper.sh
 fi
 
 # Set name of the theme to load. Optionally, if you set this to "random"
@@ -152,7 +154,7 @@ add_port_idf_container() {
     port=$(curl "http://localhost:2027" --silent|grep "Entity Types"|egrep -o 'https?://[^ ]+'|cut -d':' -f3|cut -d'/' -f1)
     container_id=$(docker ps |grep opscalm/idf|awk '{print $1}')
     echo "Adding port forwarding at port" $port
-    ipaddress=$(docker inspect $container_id|grep '"IPAddress":' -m 1|grep -P '[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*' -o)
+    ipaddress=$(docker inspect $container_id|grep '"IPAddress":' -m 1|grep '[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*' -o)
     sudo iptables -t nat -A  DOCKER -p tcp --dport $port -j DNAT --to-destination $ipaddress:$port
 }
 
