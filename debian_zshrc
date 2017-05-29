@@ -298,6 +298,25 @@ ep_restart() {
     fi
 }
 
+ep_log() {
+    if [ -z "$1" ]; then
+        echo "Usage: ep_log 'service_pattern'"
+        return 1
+    fi
+
+    if [ "$1" = "-h" ]; then
+        echo "Usage: ep_log 'service_pattern'"
+        return 1
+    fi
+
+    to_grep=$(echo $1|sed 's/ /\\\|/g')
+    to_kill=$(supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+
+    echo "Service to log: $to_kill"
+    if [ ! -z "$to_kill" ]; then
+        supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf tail -f $to_kill
+    fi
+}
 
 # calm functions
 alias c_boot='supervisord -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf'
@@ -386,5 +405,25 @@ c_restart() {
         for k in $to_kill; do 
             supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf restart $k;
         done
+    fi
+}
+
+c_log() {
+    if [ -z "$1" ]; then
+        echo "Usage: c_log 'service_pattern'"
+        return 1
+    fi
+
+    if [ "$1" = "-h" ]; then
+        echo "Usage: c_log 'service_pattern'"
+        return 1
+    fi
+
+    to_grep=$(echo $1|sed 's/ /\\\|/g')
+    to_kill=$(supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+
+    echo "Service to log: $to_kill"
+    if [ ! -z "$to_kill" ]; then
+        supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf tail -f $to_kill
     fi
 }
