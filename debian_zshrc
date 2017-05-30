@@ -71,11 +71,13 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(sudo git virtualenvs python ubuntu autopep8 pip supervisor zsh-syntax-highlighting zsh-256color alias-tips)
+plugins=(sudo git virtualenvs python ubuntu autopep8 pip supervisor zsh-syntax-highlighting zsh-256color alias-tips zsh-completions)
 
 source $ZSH/oh-my-zsh.sh
 workon calm
 
+export PATH=/calm/bin:$PATH
+export ERGON_COMPONENT_NAME='Calm-Hercules-Tanmay'
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -116,6 +118,8 @@ export PATH=${arcpath}/arcanist/bin:$PATH
 if [ -f ${arcpath}/arcanist/resources/shell/bash-completion ]; then
         source ${arcpath}/arcanist/resources/shell/bash-completion
 fi
+
+autoload -U compinit && compinit
 
 # custom functions 
 find_in_js() {
@@ -178,7 +182,10 @@ start_idf_container() {
 }
 
 stop_idf_container() {
-    docker ps |grep opscalm/idf|awk '{print $1}'|xargs docker rm -f
+    container_id=$(docker ps |grep opscalm/idf|awk '{print $1}')
+    if [ ! "$container_id" = "" ]; then
+        docker rm -f $container_id
+    fi
 }
 
 restart_idf_container() {
