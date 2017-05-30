@@ -159,13 +159,22 @@ add_port_idf_container() {
     container_id=$(docker ps |grep opscalm/idf|awk '{print $1}')
     echo "Adding port forwarding at port" $port
     ipaddress=$(docker inspect $container_id|grep '"IPAddress":' -m 1|grep '[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*' -o)
-    sudo iptables -t nat -A  DOCKER -p tcp --dport $port -j DNAT --to-destination $ipaddress:$port
+    # sudo iptables -t nat -A  DOCKER -p tcp --dport $port -j DNAT --to-destination $ipaddress:$port
 }
 
 start_idf_container() {
-    container_id=$(docker ps |grep opscalm/idf|awk '{print $1}')
+    if [ -z "$1" ]; then
+	    container_id=$(docker ps |grep idf_container|awk '{print $1}')
+    else
+	    container_id=$(docker ps |grep idf_test_container|awk '{print $1}')	
+    fi
+
     if [ "$container_id" = "" ]; then
-        docker run -dt -p 2027:2027 opscalm/idf
+	if [ -z "$1" ]; then
+		docker run -dt --name idf_container -p 2027:2027 opscalm/idf
+	else
+		docker run -dt --name idf_test_container -p 2028:2027 opscalm/idf
+	fi
         sleep 45
         # curl --connect-timeout 5 \
         #      --max-time 10 \
@@ -182,18 +191,22 @@ start_idf_container() {
 }
 
 stop_idf_container() {
-    container_id=$(docker ps |grep opscalm/idf|awk '{print $1}')
-    if [ ! "$container_id" = "" ]; then
-        docker rm -f $container_id
+    if [ -z "$1" ]; then
+	    container_id=$(docker ps -a|grep idf_container|awk '{print $1}')
+    else
+	    container_id=$(docker ps -a|grep idf_test_container|awk '{print $1}')	
+    fi
+    if [ ! -z "$container_id" ]; then
+	    docker rm -f $container_id
     fi
 }
 
 restart_idf_container() {
     # delete existing container
-    stop_idf_container
+    stop_idf_container $1
 
     # start new container
-    start_idf_container
+    start_idf_container $1
 }
 
 # epsilon functions

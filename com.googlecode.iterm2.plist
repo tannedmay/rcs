@@ -2,11 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AboutToPasteTabsWithCancel</key>
+	<true/>
+	<key>AboutToPasteTabsWithCancel_selection</key>
+	<integer>0</integer>
+	<key>AlternateMouseScroll</key>
+	<true/>
 	<key>AppleAntiAliasingThreshold</key>
 	<integer>1</integer>
 	<key>AppleScrollAnimationEnabled</key>
 	<integer>0</integer>
 	<key>AppleSmoothFixedFontsSizeThreshold</key>
+	<integer>1</integer>
+	<key>ClosingTmuxWindowKillsTmuxWindows</key>
+	<true/>
+	<key>ClosingTmuxWindowKillsTmuxWindows_selection</key>
 	<integer>1</integer>
 	<key>Custom Color Presets</key>
 	<dict>
@@ -223,6 +233,8 @@
 	</dict>
 	<key>Default Bookmark Guid</key>
 	<string>7D71358F-50E9-4C80-9905-4F1405C05B03</string>
+	<key>FocusFollowsMouse</key>
+	<true/>
 	<key>LoadPrefsFromCustomFolder</key>
 	<true/>
 	<key>NSFontPanelPreviewHeight</key>
@@ -265,13 +277,15 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 139 606 456 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>309 326 796 473 0 0 1440 900 </string>
+	<string>309 347 918 452 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>161 80 570 452 0 0 1440 877 </string>
+	<string>161 63 570 452 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>176 74 570 452 0 0 1440 877 </string>
+	<string>626 0 570 452 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>197 47 570 452 0 0 1440 900 </string>
+	<string>0 425 570 452 0 0 1440 900 </string>
+	<key>NSWindow Frame iTerm Window 3</key>
+	<string>218 24 570 452 0 0 1440 900 </string>
 	<key>NeverWarnAboutShortLivedSessions_243550B1-E106-445E-98FA-24F9474BDE29</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_243550B1-E106-445E-98FA-24F9474BDE29_selection</key>
@@ -2833,12 +2847,20 @@
 	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>9C2006A7-8CB0-4AC1-BA6F-842D9ABA8C5E</string>
+	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
+	<true/>
+	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
+	<integer>0</integer>
 	<key>NoSyncNewWindowOrTabFromTmuxOpensTmux</key>
 	<true/>
 	<key>NoSyncNewWindowOrTabFromTmuxOpensTmux_selection</key>
 	<integer>0</integer>
+	<key>NoSyncPermissionToShowTip</key>
+	<false/>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
 	<real>514222577.22384</real>
+	<key>PMPrintingExpandedStateForPrint2</key>
+	<false/>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
@@ -2874,6 +2896,8 @@
 	</dict>
 	<key>PrefsCustomFolder</key>
 	<string>/Users/tanmay.kakkar/Codebases/rcs</string>
+	<key>Print In Black And White</key>
+	<true/>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedAlternateAppNameKey</key>
@@ -2883,7 +2907,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-04-19T17:27:40Z</date>
+	<date>2017-05-18T16:06:45Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>WordCharacters</key>
