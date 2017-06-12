@@ -71,7 +71,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(sudo git virtualenvs python ubuntu autopep8 pip supervisor zsh-syntax-highlighting zsh-256color alias-tips zsh-completions)
+plugins=(sudo git virtualenvs python ubuntu autopep8 pip supervisor zsh-syntax-highlighting zsh-256color alias-tips zsh-completions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 workon calm
@@ -279,7 +279,14 @@ ep_stop() {
         done
     fi
 }
-alias ep_shutdown='supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf shutdown'
+ep_shutdown(){
+    supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf shutdown
+    while [ -e /tmp/supervisor.sock ]
+    do
+        sleep 2
+        echo "Waiting for closing of socket"
+    done
+}
 ep_restart() {
     if [ -z "$1" ]; then
         echo "Restarting all..."
@@ -322,8 +329,10 @@ ep_log() {
     fi
 }
 
+alias ep_reboot='ep_shutdown && ep_boot'
+
 # calm functions
-alias c_boot='supervisord -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf'
+alias c_boot='supervisord -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf && c_status'
 c_start() {
     if [ -z "$1" ]; then
         echo "Starting all..."
@@ -389,7 +398,15 @@ c_stop() {
         done
     fi
 }
-alias c_shutdown='supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf shutdown'
+c_shutdown() {
+    supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf shutdown
+    while [ -e /tmp/calm_supervisor.sock ]
+    do
+        sleep 2
+        echo "Waiting for closing of socket"
+    done
+}
+
 c_restart() {
     if [ -z "$1" ]; then
         echo "Restarting all..."
@@ -431,3 +448,5 @@ c_log() {
         supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf tail -f $to_kill
     fi
 }
+
+alias c_reboot='c_shutdown && sleep 15 && c_boot'
