@@ -19,10 +19,9 @@ if [ $HOST = "tanmay-kakkar" ]; then
     export TOP=~/Codebases/main
     export DISTCC_HOSTS="--randomize distcc-0/24 distcc-1/24"
     export CCACHE_DIR=$HOME/.ccache
-    source /usr/bin/virtualenvwrapper.sh
-else
-    source /usr/local/bin/virtualenvwrapper.sh
 fi
+
+source /usr/bin/virtualenvwrapper.sh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
