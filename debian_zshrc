@@ -21,7 +21,7 @@ if [ $HOST = "tanmay-kakkar" ]; then
     export CCACHE_DIR=$HOME/.ccache
 fi
 
-source /usr/bin/virtualenvwrapper.sh
+source /usr/bin/virtualenvwrapper.sh &> /dev/null || source /usr/local/bin/virtualenvwrapper.sh &> /dev/null 
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
