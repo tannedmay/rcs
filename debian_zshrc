@@ -123,7 +123,6 @@ fi
 # for custom completion plugin i.e.- dbm.py
 autoload -U compinit && compinit
 
-
 # build jove 
 build_jove() {
     cd /calm/ && make && cd -
@@ -144,21 +143,6 @@ copy_jove(){
     fi
     scp nutanix@$dev_vm:/calm/src/calm/server/jove/jove /calm/bin
 
-}
-
-# build and copy jove from dev_vm
-build_and_cp_jove(){
-    if [ "$1" = "-h" ]; then
-        echo "Usage: build_and_cp_jove [dev_vm_ip]"
-        return 1
-    fi
-    if [ -z "$1" ]; then
-        dev_vm='tanmay-kakkar.dev.eng.nutanix.com'
-    else
-        dev_vm=$1
-    fi
-    ssh nutanix@$dev_vm build_jove
-    copy_jove $dev_vm
 }
 
 # custom functions 
