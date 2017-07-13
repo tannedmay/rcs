@@ -70,13 +70,15 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(sudo git virtualenvs python ubuntu autopep8 pip supervisor zsh-syntax-highlighting zsh-256color alias-tips zsh-completions zsh-syntax-highlighting)
+plugins=(sudo git virtualenvs python fedora autopep8 pip supervisor zsh-syntax-highlighting zsh-256color alias-tips zsh-completions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 workon calm
 
 export PATH=/calm/bin:$PATH
 export ERGON_COMPONENT_NAME='Calm-Hercules-Tanmay'
+export EDITOR="/usr/bin/vim"
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -112,45 +114,84 @@ alias list_my_branches="git for-each-ref --format=' %(authorname) %09 %(refname)
 alias workoff='deactivate'
 
 # Arcanist stuff
-arcpath=$HOME/Sources/arc
+arcpath=$HOME/Codebases/arc
 export PATH=${arcpath}/arcanist/bin:$PATH
 if [ -f ${arcpath}/arcanist/resources/shell/bash-completion ]; then
         source ${arcpath}/arcanist/resources/shell/bash-completion
 fi
 
+# for custom completion plugin i.e.- dbm.py
 autoload -U compinit && compinit
+
+
+# build jove 
+build_jove() {
+    cd /calm/ && make && cd -
+    cd /calm/src/calm/server/jove
+    make build
+}
+
+# copy jove
+copy_jove(){
+    if [ "$1" = "-h" ]; then
+        echo "Usage: copy_jove [dev_vm_ip]"
+        return 1
+    fi
+    if [ -z "$1" ]; then
+        dev_vm='tanmay-kakkar.dev.eng.nutanix.com'
+    else
+        dev_vm=$1
+    fi
+    scp nutanix@$dev_vm:/calm/src/calm/server/jove/jove /calm/bin
+
+}
+
+# build and copy jove from dev_vm
+build_and_cp_jove(){
+    if [ "$1" = "-h" ]; then
+        echo "Usage: build_and_cp_jove [dev_vm_ip]"
+        return 1
+    fi
+    if [ -z "$1" ]; then
+        dev_vm='tanmay-kakkar.dev.eng.nutanix.com'
+    else
+        dev_vm=$1
+    fi
+    ssh nutanix@$dev_vm build_jove
+    copy_jove $dev_vm
+}
 
 # custom functions 
 find_in_js() {
     if [ "$#" -eq 1 ]; then
-        find ./ -name '*.js*'|xargs grep "$1"
+        find ./ -name '*.js*' -type f|xargs grep "$1"
         return 0
     fi
-    find $1 -name '*.js*'|xargs grep "$2"
+    find $1 -name '*.js*' -type f|xargs grep "$2"
 }
 
 find_in_python() {
     if [ "$#" -eq 1 ]; then
-        find ./ -name '*.py'|xargs grep "$1"
+        find ./ -name '*.py' -type f|xargs grep "$1"
         return 0
     fi
-    find $1 -name '*.py'|xargs grep "$2"
+    find $1 -name '*.py' -type f|xargs grep "$2"
 }
 
 find_in_java() {
     if [ "$#" -eq 1 ]; then
-        find ./ -name '*.java'|xargs grep "$1"
+        find ./ -name '*.java' -type f|xargs grep "$1"
         return 0
     fi
-    find $1 -name '*.java'|xargs grep "$2"
+    find $1 -name '*.java' -type f|xargs grep "$2"
 }
 
 find_in_wf() {
     if [ "$#" -eq 1 ]; then
-        find ./ -name '*.wf'|xargs grep "$1"
+        find ./ -name '*.wf' -type f|xargs grep "$1"
         return 0
     fi
-    find $1 -name '*.wf'|xargs grep "$2"
+    find $1 -name '*.wf' -type f|xargs grep "$2"
 }
 
 add_port_idf_container() {
@@ -449,3 +490,32 @@ c_log() {
 }
 
 alias c_reboot='c_shutdown && sleep 15 && c_boot'
+
+
+# vaitarna functions
+alias vaitarna_boot='workon vaitarna && supervisord -c /home/tanmay/Codebases/lambda/conf/supervisord.conf && sleep 2 &&
+    vaitarna_status'
+
+vaitarna_shutdown(){
+    workon vaitarna
+    supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf shutdown
+    while [ -e /tmp/vaitarna.sock ]
+    do
+        sleep 2
+        echo "Waiting for closing of socket"
+    done
+}
+
+vaitarna_log() {
+    to_kill='epsilon-app:vaitarna' 
+
+    echo "Service to log: $to_kill"
+    supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf tail -f $to_kill
+}
+
+vaitarna_status() {
+    workon vaitarna
+    supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf status all;
+}
+
+alias vaitarna_reboot='vaitarna_shutdown && vaitarna_boot'
