@@ -14,6 +14,8 @@
 	<integer>0</integer>
 	<key>AppleSmoothFixedFontsSizeThreshold</key>
 	<integer>1</integer>
+	<key>AutoHideTmuxClientSession</key>
+	<true/>
 	<key>ClosingTmuxTabKillsTmuxWindows</key>
 	<true/>
 	<key>ClosingTmuxTabKillsTmuxWindows_selection</key>
@@ -236,7 +238,11 @@
 		</dict>
 	</dict>
 	<key>Default Bookmark Guid</key>
-	<string>7D71358F-50E9-4C80-9905-4F1405C05B03</string>
+	<string>F524430B-A67A-4D10-8D52-78D56930BF43</string>
+	<key>DeleteProfile_SilenceUntil</key>
+	<real>520836104.14805901</real>
+	<key>DeleteProfile_selection</key>
+	<integer>0</integer>
 	<key>FocusFollowsMouse</key>
 	<true/>
 	<key>LoadPrefsFromCustomFolder</key>
@@ -281,11 +287,11 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 139 606 456 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>309 400 796 473 0 0 1440 877 </string>
+	<string>309 322 796 473 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 421 570 452 0 0 1440 877 </string>
+	<string>0 0 1400 877 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>0 448 570 452 0 0 1440 900 </string>
+	<string>0 0 1400 877 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>0 448 570 452 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -538,7 +544,7 @@
 			<key>Custom Command</key>
 			<string>No</string>
 			<key>Custom Directory</key>
-			<string>No</string>
+			<string>Recycle</string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Description</key>
@@ -1176,7 +1182,7 @@
 			<key>Custom Command</key>
 			<string>Yes</string>
 			<key>Custom Directory</key>
-			<string>No</string>
+			<string>Recycle</string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Description</key>
@@ -1814,7 +1820,7 @@
 			<key>Custom Command</key>
 			<string>Yes</string>
 			<key>Custom Directory</key>
-			<string>No</string>
+			<string>Recycle</string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Description</key>
@@ -2450,7 +2456,7 @@
 			<key>Custom Command</key>
 			<string>No</string>
 			<key>Custom Directory</key>
-			<string>No</string>
+			<string>Recycle</string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Description</key>
@@ -3507,6 +3513,8 @@
 	<false/>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
 	<real>514222577.22384</real>
+	<key>OpenTmuxWindowsIn</key>
+	<integer>0</integer>
 	<key>PMPrintingExpandedStateForPrint2</key>
 	<false/>
 	<key>PointerActions</key>
@@ -3555,9 +3563,11 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-06-20T17:45:52Z</date>
+	<date>2017-07-10T05:42:19Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
+	<key>TmuxDashboardLimit</key>
+	<integer>1</integer>
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
 	<key>findIgnoreCase_iTerm</key>
