@@ -125,7 +125,9 @@ autoload -U compinit && compinit
 
 # build jove 
 build_jove() {
-    cd /calm/ && make && cd -
+    cd /calm/
+    git pull
+    make
     cd /calm/src/calm/server/jove
     make build
 }
