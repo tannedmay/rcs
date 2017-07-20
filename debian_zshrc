@@ -123,6 +123,11 @@ fi
 # for custom completion plugin i.e.- dbm.py
 autoload -U compinit && compinit
 
+# idf_check
+check_idf(){
+	curl $IDF_URL &> /dev/null && restart_idf_container
+}
+
 # build jove 
 build_jove() {
     cd /calm/
