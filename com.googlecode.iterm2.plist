@@ -238,7 +238,7 @@
 		</dict>
 	</dict>
 	<key>Default Bookmark Guid</key>
-	<string>F524430B-A67A-4D10-8D52-78D56930BF43</string>
+	<string>7D71358F-50E9-4C80-9905-4F1405C05B03</string>
 	<key>DeleteProfile_SilenceUntil</key>
 	<real>520836104.14805901</real>
 	<key>DeleteProfile_selection</key>
@@ -284,14 +284,16 @@
 	</data>
 	<key>NSTableView Supports v2 KeyBingingTable</key>
 	<true/>
+	<key>NSWindow Frame SUUpdateAlert</key>
+	<string>390 381 620 392 0 0 1440 900 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 139 606 456 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>309 322 796 473 0 0 1440 900 </string>
+	<string>309 56 796 473 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1400 877 0 0 1440 877 </string>
+	<string>0 0 1400 877 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>0 0 1400 877 0 0 1440 877 </string>
+	<string>0 448 570 452 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>0 448 570 452 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -1143,7 +1145,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>ssh -i ~/Documents/Keys/dev_vm.pem nutanix@tanmay-kakkar.dev.eng.nutanix.com</string>
+			<string>ssh nutanix@tanmay-kakkar-1.eng.nutanix.com</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -3563,7 +3565,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-07-10T05:42:19Z</date>
+	<date>2017-09-19T08:56:47Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>TmuxDashboardLimit</key>
