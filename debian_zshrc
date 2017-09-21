@@ -117,7 +117,7 @@ alias upload_wfs='find ~/Codebases/calm-workflows/ -name "*.wf"|xargs epdb.py im
 alias vimzshrc='vim ~/.zshrc && source $_'
 alias list_my_branches="git for-each-ref --format=' %(authorname) %09 %(refname)'|grep Tanmay|grep remote"
 alias workoff='deactivate'
-alias get_nutanix_egg='scp nutanix@tanmay-kakkar-1.eng.nutanix.com:~/Codebases/main/build/python-tree/nutanix_python.egg ./'
+alias get_nutanix_egg='scp root@10.5.216.234:"/root/main/.python/dist/nutanix_python-*.egg" ./'
 alias get_insights_templates='scp nutanix@tanmay-kakkar-1.eng.nutanix.com:~/Codebases/main/installer/config/insights/entity_attribute_config.proto.template ~/idf_template/entity_attribute_config.proto && scp nutanix@tanmay-kakkar-1.eng.nutanix.com:~/Codebases/main/installer/config/insights/entity_type_config.proto.template ~/idf_template/entity_type_config.proto'
 
 # Arcanist stuff
