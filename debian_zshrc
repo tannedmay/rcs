@@ -200,6 +200,15 @@ add_port_idf_container() {
     # sudo iptables -t nat -A  DOCKER -p tcp --dport $port -j DNAT --to-destination $ipaddress:$port
 }
 
+wait_till_idf_up() {
+    printf "Waiting for idf service to come up"
+    until $(curl --output /dev/null --silent --head --fail http://localhost:2027); do
+        printf '.'
+        sleep 5
+    done
+    echo "\nNow IDF service is up in container"
+}
+
 start_idf_container() {
     if [ -z "$1" ]; then
 	    container_id=$(docker ps |grep idf_container|awk '{print $1}')
@@ -213,14 +222,8 @@ start_idf_container() {
 	else
 		docker run -dt --name idf_test_container -p 2028:2027 -v ~/idf_template/:/root/idf_template/ registry.calm.nutanix.com:5000/idf
 	fi
-        sleep 45
-        # curl --connect-timeout 5 \
-        #      --max-time 10 \
-        #      --retry 5 \
-        #      --retry-delay 0 \
-        #      --retry-max-time 60 \
-        #      'http://localhost:2027'
-        add_port_idf_container
+	wait_till_idf_up
+        # add_port_idf_container
         return 0
     else
         echo "Already running"

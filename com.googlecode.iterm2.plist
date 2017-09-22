@@ -289,9 +289,9 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 139 606 456 0 0 1440 900 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>309 56 796 473 0 0 1440 900 </string>
+	<string>99 300 918 512 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1400 877 0 0 1440 900 </string>
+	<string>0 0 1400 894 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>0 448 570 452 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -2861,6 +2861,18 @@
 		<dict>
 			<key>ASCII Anti Aliased</key>
 			<true/>
+			<key>AWDS Pane Directory</key>
+			<string></string>
+			<key>AWDS Pane Option</key>
+			<string>No</string>
+			<key>AWDS Tab Directory</key>
+			<string></string>
+			<key>AWDS Tab Option</key>
+			<string>No</string>
+			<key>AWDS Window Directory</key>
+			<string></string>
+			<key>AWDS Window Option</key>
+			<string>No</string>
 			<key>Ambiguous Double Width</key>
 			<false/>
 			<key>Ansi 0 Color</key>
@@ -3565,7 +3577,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-09-19T08:56:47Z</date>
+	<date>2017-09-21T10:51:27Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>TmuxDashboardLimit</key>
