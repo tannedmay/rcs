@@ -21,14 +21,16 @@ export DISABLE_ELASTIC=true
 export DEPLOYMENT_TYPE=dev
 
 # Dev vm specific
-if [ $HOST = "tanmay-kakkar" ]; then
+if [ $HOST = "tanmay-kakkar-2.eng.nutanix.com" ]; then
     export PATH=$PATH:$HOME/bin
     export PYTHONUSERBASE=$TOP'/.python'
     export PYTHONPATH=:$TOP'/.python'
 
     export TOP=~/Codebases/main
-    export DISTCC_HOSTS="--randomize distcc-0/24 distcc-1/24"
+    export DISTCC_HOSTS="blr-distcc-proxy.eng.nutanix.com"
     export CCACHE_DIR=$HOME/.ccache
+    export NX_YUM_HOST=endor.dyn.nutanix.com
+    export NX_YUM_PATH=yum
 fi
 
 source /usr/bin/virtualenvwrapper.sh &> /dev/null || source /usr/local/bin/virtualenvwrapper.sh &> /dev/null 
