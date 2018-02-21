@@ -126,6 +126,8 @@ alias upload_wfs='workon epsilon && find ~/Codebases/calm-workflows/ -name "*.wf
 alias vimzshrc='vim ~/.zshrc && source $_'
 alias list_my_branches="git for-each-ref --format=' %(authorname) %09 %(refname)'|grep Tanmay|grep remote"
 alias workoff='deactivate'
+alias makepy="make realclean; make all_pydeps && rm build/python-tree/nutanix_python.egg ; make python-modules-tree"
+alias makego="make realclean; make all_godeps"
 
 get_nutanix_egg(){
     if [ -z $1 ]; then
