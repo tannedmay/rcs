@@ -126,8 +126,10 @@ alias upload_wfs='workon epsilon && find ~/Codebases/calm-workflows/ -name "*.wf
 alias vimzshrc='vim ~/.zshrc && source $_'
 alias list_my_branches="git for-each-ref --format=' %(authorname) %09 %(refname)'|grep Tanmay|grep remote"
 alias workoff='deactivate'
-alias makepy="make realclean; make all_pydeps && rm build/python-tree/nutanix_python.egg ; make python-modules-tree"
-alias makego="make realclean; make all_godeps"
+alias makepy="cd $TOP && make all_pydeps && rm build/python-tree/nutanix_python.egg ; make python-modules-tree && echo 'Path for nutanix python egg: build/python-tree/nutanix_python.egg'"
+alias makego="cd $TOP && make all_godeps && make all_go_bin"
+alias makeclean="make realclean"
+alias makencc="makepy && make ncc-installer"
 
 get_nutanix_egg(){
     if [ -z $1 ]; then
@@ -576,6 +578,9 @@ function straceall {
     inargs=$(ps aux|grep $to_grep|awk '{print $2}'|sed ':a;N;$!ba;s/\n/ /g'|sed 's/\([0-9]*\)/-p \1/g')
     strace $(echo $inargs)
 }
+
+# zsh-bd
+. $HOME/.zsh/plugins/bd/bd.zsh
 
 # zsh-bd
 . $HOME/.zsh/plugins/bd/bd.zsh
