@@ -16,8 +16,8 @@ export LC_ALL=en_US.UTF-8
 # virtualenvwrapper
 export WORKON_HOME=$HOME/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
-export GOPATH=$HOME/.go:/calm/.go:$TOP/.go
-export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+export GOPATH=$HOME/.go:$HOME/Codebases/calm-epsilon-shared/.go:$HOME/Sources/gosrc
+export PATH=$PATH:/usr/local/go/bin:$HOME/.go/bin
 export DISABLE_SSL_ROUTE=true
 export DISABLE_ELASTIC=true
 export DEPLOYMENT_TYPE=dev
@@ -83,7 +83,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(sudo git virtualenvs python fedora autopep8 pip supervisor arcanist zsh-syntax-highlighting zsh-256color alias-tips zsh-completions zsh-syntax-highlighting, zsh-autosuggestions alias-tips vundle yum virtualenv virtualenvwrapper ssh-agent notify docker)
+plugins=(sudo git virtualenv python fedora autopep8 pip supervisor arcanist zsh-syntax-highlighting zsh-256color alias-tips zsh-completions zsh-autosuggestions alias-tips vundle yum virtualenv virtualenvwrapper ssh-agent notify docker)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -589,4 +589,4 @@ function straceall {
 # zsh-bd
 . $HOME/.zsh/plugins/bd/bd.zsh
 
-workon calm
+export CALM=/calm
