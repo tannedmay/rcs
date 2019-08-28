@@ -16,7 +16,7 @@ export LC_ALL=en_US.UTF-8
 # virtualenvwrapper
 export WORKON_HOME=$HOME/.virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
-export GOPATH=$HOME/.go:$HOME/Codebases/calm-epsilon-shared/.go:$HOME/Sources/gosrc
+export GOPATH=$HOME/.go:/calm/.go:$TOP/.go
 export PATH=$PATH:/usr/local/go/bin:$HOME/.go/bin
 export DISABLE_SSL_ROUTE=true
 export DISABLE_ELASTIC=true
@@ -35,32 +35,6 @@ if [ $HOST = "tanmay-kakkar-2.eng.nutanix.com" ]; then
 fi
 
 source /usr/bin/virtualenvwrapper.sh &> /dev/null || source /usr/local/bin/virtualenvwrapper.sh &> /dev/null 
-
-die() {
-    echo "ERROR: $@"
-    echo "Exiting..."
-    exit 1
-}
-
-clean_idf_data() {
-    echo "Stopping the cluster services.."
-    cluster stop || die "Unable to stop cluster services"
-    echo DynamicRingChangerService  | zkwrite /appliance/logical/genesis/stop_service || die "Failed to set DynamicRingChangerService break point"
-    # cluster start && cluster stop
-    stargate_dir=$(df -h|grep stargate-storage|awk '{print $6}') || die "Unable to locate stargate-storage"
-    echo "Deleting data.."
-    rm -rf $stargate_dir/metadata/cassandra/data/insights/* || die "Failed in deleting insights data" 
-    rm -rf $stargate_dir/metadata/cassandra/data/insights_metric_data/* || die "Failed in deleting insights metric data"
-    echo "Done"
-    echo ""  | zkwrite /appliance/logical/genesis/stop_service || die "Failed to remove break point"
-    cluster start || die "Failed to start cluster services"
-}
-
-upgrade_pc() {
-    echo "Upgrading to $1"
-    tar xvf $1 && cd install && ./bin/cluster -i . -p upgrade || die "Upgrade failed"
-    echo "Done"
-}
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -109,10 +83,9 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(sudo git virtualenv python fedora autopep8 pip supervisor arcanist zsh-syntax-highlighting zsh-256color alias-tips zsh-completions zsh-autosuggestions alias-tips vundle yum virtualenv virtualenvwrapper ssh-agent notify docker)
+plugins=(sudo git virtualenvs python fedora autopep8 pip supervisor arcanist zsh-syntax-highlighting zsh-256color alias-tips zsh-completions zsh-syntax-highlighting, zsh-autosuggestions alias-tips vundle yum virtualenv virtualenvwrapper ssh-agent notify docker)
 
 source $ZSH/oh-my-zsh.sh
-workon calmtest
 
 export PATH=/calm/bin:$PATH
 export ERGON_COMPONENT_NAME='Calm-Hercules-Tanmay'
@@ -169,7 +142,7 @@ alias get_and_install_new_nutanix_egg='get_nutanix_egg /tmp/ && easy_install /tm
 alias get_insights_templates='scp nutanix@tanmay-kakkar-1.eng.nutanix.com:~/Codebases/main/installer/config/insights/entity_attribute_config.proto.template ~/idf_template/entity_attribute_config.proto && scp nutanix@tanmay-kakkar-1.eng.nutanix.com:~/Codebases/main/installer/config/insights/entity_type_config.proto.template ~/idf_template/entity_type_config.proto'
 
 # Arcanist stuff
-arcpath=$HOME/Codebases/arc
+arcpath=/arc
 export PATH=${arcpath}/arcanist/bin:$PATH
 if [ -f ${arcpath}/arcanist/resources/shell/bash-completion ]; then
         source ${arcpath}/arcanist/resources/shell/bash-completion
@@ -307,12 +280,12 @@ restart_idf_container() {
 }
 
 # epsilon functions
-alias ep_boot='supervisord -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf && sleep 2 &&
+alias ep_boot='supervisord -c /epsilon/conf/supervisord.conf && sleep 2 &&
     ep_status'
 ep_start() {
     if [ -z "$1" ]; then
         echo "Starting all..."
-        supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf start all
+        supervisorctl -c /epsilon/conf/supervisord.conf start all
         return 0
     fi
 
@@ -322,11 +295,11 @@ ep_start() {
     fi
 
     to_grep=$(echo $@|sed 's/ /\\\|/g')
-    to_kill=$(supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+    to_kill=$(supervisorctl -c /epsilon/conf/supervisord.conf status|awk '{print $1}'|grep $to_grep)
 
     if [ ! -z "$to_kill" ]; then
         for k in $to_kill; do 
-            supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf start $k;
+            supervisorctl -c /epsilon/conf/supervisord.conf start $k;
         done
     fi
 }
@@ -334,7 +307,7 @@ ep_start() {
 ep_status() {
     if [ -z "$1" ]; then
         echo "Fetching status for all..."
-        supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf status all
+        supervisorctl -c /epsilon/conf/supervisord.conf status all
         return 0
     fi
 
@@ -345,12 +318,12 @@ ep_status() {
 
     to_grep=$(echo $@|sed 's/ /\\\|/g')
     echo $to_grep
-    to_kill=$(supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+    to_kill=$(supervisorctl -c /epsilon/conf/supervisord.conf status|awk '{print $1}'|grep $to_grep)
     echo $to_kill
 
     if [ ! -z "$to_kill" ]; then
         for k in $to_kill; do 
-            supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf status $k;
+            supervisorctl -c /epsilon/conf/supervisord.conf status $k;
         done
     fi
 }
@@ -358,7 +331,7 @@ ep_status() {
 ep_stop() {
     if [ -z "$1" ]; then
         echo "Stopping all..."
-        supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf stop all
+        supervisorctl -c /epsilon/conf/supervisord.conf stop all
         return 0
     fi
 
@@ -368,16 +341,16 @@ ep_stop() {
     fi
 
     to_grep=$(echo $@|sed 's/ /\\\|/g')
-    to_kill=$(supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+    to_kill=$(supervisorctl -c /epsilon/conf/supervisord.conf status|awk '{print $1}'|grep $to_grep)
 
     if [ ! -z "$to_kill" ]; then
         for k in $to_kill; do 
-            supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf stop $k;
+            supervisorctl -c /epsilon/conf/supervisord.conf stop $k;
         done
     fi
 }
 ep_shutdown(){
-    supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf shutdown
+    supervisorctl -c /epsilon/conf/supervisord.conf shutdown
     while [ -e /tmp/supervisor.sock ]
     do
         sleep 2
@@ -387,7 +360,7 @@ ep_shutdown(){
 ep_restart() {
     if [ -z "$1" ]; then
         echo "Restarting all..."
-        supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf restart all
+        supervisorctl -c /epsilon/conf/supervisord.conf restart all
         return 0
     fi
 
@@ -397,11 +370,11 @@ ep_restart() {
     fi
 
     to_grep=$(echo $@|sed 's/ /\\\|/g')
-    to_kill=$(supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+    to_kill=$(supervisorctl -c /epsilon/conf/supervisord.conf status|awk '{print $1}'|grep $to_grep)
 
     if [ ! -z "$to_kill" ]; then
         for k in $to_kill; do 
-            supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf restart $k;
+            supervisorctl -c /epsilon/conf/supervisord.conf restart $k;
         done
     fi
 }
@@ -418,22 +391,22 @@ ep_log() {
     fi
 
     to_grep=$(echo $1|sed 's/ /\\\|/g')
-    to_kill=$(supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+    to_kill=$(supervisorctl -c /epsilon/conf/supervisord.conf status|awk '{print $1}'|grep $to_grep)
 
     echo "Service to log: $to_kill"
     if [ ! -z "$to_kill" ]; then
-        supervisorctl -c /home/tanmay/Codebases/epsilon/conf/supervisord.conf tail -f $to_kill
+        supervisorctl -c /epsilon/conf/supervisord.conf tail -f $to_kill
     fi
 }
 
 alias ep_reboot='ep_shutdown && ep_boot'
 
 # calm functions
-alias c_boot='supervisord -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf && c_status'
+alias c_boot='supervisord -c /calm/conf/supervisor/supervisord.conf && c_status'
 c_start() {
     if [ -z "$1" ]; then
         echo "Starting all..."
-        supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf start all
+        supervisorctl -c /calm/conf/supervisor/supervisord.conf start all
         return 0
     fi
 
@@ -443,11 +416,11 @@ c_start() {
     fi
 
     to_grep=$(echo $@|sed 's/ /\\\|/g')
-    to_kill=$(supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+    to_kill=$(supervisorctl -c /calm/conf/supervisor/supervisord.conf status|awk '{print $1}'|grep $to_grep)
 
     if [ ! -z "$to_kill" ]; then
         for k in $to_kill; do 
-            supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf start $k;
+            supervisorctl -c /calm/conf/supervisor/supervisord.conf start $k;
         done
     fi
 }
@@ -455,7 +428,7 @@ c_start() {
 c_status() {
     if [ -z "$1" ]; then
         echo "Fetching status for all..."
-        supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf status all
+        supervisorctl -c /calm/conf/supervisor/supervisord.conf status all
         return 0
     fi
 
@@ -465,11 +438,11 @@ c_status() {
     fi
 
     to_grep=$(echo $@|sed 's/ /\\\|/g')
-    to_kill=$(supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+    to_kill=$(supervisorctl -c /calm/conf/supervisor/supervisord.conf status|awk '{print $1}'|grep $to_grep)
 
     if [ ! -z "$to_kill" ]; then
         for k in $to_kill; do 
-            supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf status $k;
+            supervisorctl -c /calm/conf/supervisor/supervisord.conf status $k;
         done
     fi
 }
@@ -477,7 +450,7 @@ c_status() {
 c_stop() {
     if [ -z "$1" ]; then
         echo "Stopping all..."
-        supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf stop all
+        supervisorctl -c /calm/conf/supervisor/supervisord.conf stop all
         return 0
     fi
 
@@ -487,16 +460,16 @@ c_stop() {
     fi
 
     to_grep=$(echo $@|sed 's/ /\\\|/g')
-    to_kill=$(supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+    to_kill=$(supervisorctl -c /calm/conf/supervisor/supervisord.conf status|awk '{print $1}'|grep $to_grep)
 
     if [ ! -z "$to_kill" ]; then
         for k in $to_kill; do 
-            supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf stop $k;
+            supervisorctl -c /calm/conf/supervisor/supervisord.conf stop $k;
         done
     fi
 }
 c_shutdown() {
-    supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf shutdown
+    supervisorctl -c /calm/conf/supervisor/supervisord.conf shutdown
     while [ -e /tmp/calm_supervisor.sock ]
     do
         sleep 2
@@ -507,7 +480,7 @@ c_shutdown() {
 c_restart() {
     if [ -z "$1" ]; then
         echo "Restarting all..."
-        supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf restart all
+        supervisorctl -c /calm/conf/supervisor/supervisord.conf restart all
         return 0
     fi
 
@@ -517,11 +490,11 @@ c_restart() {
     fi
 
     to_grep=$(echo $@|sed 's/ /\\\|/g')
-    to_kill=$(supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+    to_kill=$(supervisorctl -c /calm/conf/supervisor/supervisord.conf status|awk '{print $1}'|grep $to_grep)
 
     if [ ! -z "$to_kill" ]; then
         for k in $to_kill; do 
-            supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf restart $k;
+            supervisorctl -c /calm/conf/supervisor/supervisord.conf restart $k;
         done
     fi
 }
@@ -538,11 +511,11 @@ c_log() {
     fi
 
     to_grep=$(echo $1|sed 's/ /\\\|/g')
-    to_kill=$(supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf status|awk '{print $1}'|grep $to_grep)
+    to_kill=$(supervisorctl -c /calm/conf/supervisor/supervisord.conf status|awk '{print $1}'|grep $to_grep)
 
     echo "Service to log: $to_kill"
     if [ ! -z "$to_kill" ]; then
-        supervisorctl -c /home/tanmay/Codebases/calm/conf/supervisor/supervisord.conf tail -f $to_kill
+        supervisorctl -c /calm/conf/supervisor/supervisord.conf tail -f $to_kill
     fi
 }
 
@@ -550,12 +523,12 @@ alias c_reboot='c_shutdown && sleep 15 && c_boot'
 
 
 # vaitarna functions
-alias vaitarna_boot='workon vaitarna && supervisord -c /home/tanmay/Codebases/lambda/conf/supervisord.conf && sleep 2 &&
+alias vaitarna_boot='workon vaitarna && supervisord -c /lambda/conf/supervisord.conf && sleep 2 &&
     vaitarna_status'
 
 vaitarna_shutdown(){
     workon vaitarna
-    supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf shutdown
+    supervisorctl -c /lambda/conf/supervisord.conf shutdown
     while [ -e /tmp/vaitarna.sock ]
     do
         sleep 2
@@ -567,12 +540,12 @@ vaitarna_log() {
     to_kill='epsilon-app:vaitarna' 
 
     echo "Service to log: $to_kill"
-    supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf tail -f $to_kill
+    supervisorctl -c /lambda/conf/supervisord.conf tail -f $to_kill
 }
 
 vaitarna_status() {
     workon vaitarna
-    supervisorctl -c /home/tanmay/Codebases/lambda/conf/supervisord.conf status all;
+    supervisorctl -c /lambda/conf/supervisord.conf status all;
 }
 
 alias vaitarna_reboot='vaitarna_shutdown && vaitarna_boot'
@@ -613,18 +586,20 @@ function straceall {
     strace $(echo $inargs)
 }
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-export PATH="/usr/local/opt/ncurses/bin:$PATH"
-export GOVC_URL=https://10.46.1.214
-export GOVC_USERNAME=administrator@vsphere.local
-export GOVC_PASSWORD=Nutanix/4u
-export GOVC_INSECURE=true
-export browser='chrome'
-export CHROME_PATH="$HOME/Sources/chromedriver"
-export PYTHONDONTWRITEBYTECODE=1
-
 # zsh-bd
 . $HOME/.zsh/plugins/bd/bd.zsh
 
-export CALM=/calm
+cat << EOF
+*******************************************************************
+You are logged in calm container.
+Commands for container:
+activate - activate's calm virtual env
+code - Changes directory to calm code
+status - Prints calm service status
+********************************************************************
+EOF
+alias activate='source /venv/bin/activate'
+alias code='cd /calm/src/calm'
+alias status='supervisorctl -c /calm/conf/supervisor/supervisord.conf'
+
+activate
