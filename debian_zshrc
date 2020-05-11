@@ -7,8 +7,12 @@ export ENABLE_APLOS=false
 export PASS_PROJECT=true
 # export APLOS_IP=mypc2
 export APACHE_IP=10.15.160.35
-export APLOS_BUILD_IP=10.4.206.172
-export APLOS_BUILD_IP=10.137.44.204
+
+# export APLOS_BUILD_IP=10.46.8.101
+# export APLOS_BUILD_USER=root
+
+export APLOS_BUILD_IP=10.4.96.113
+export APLOS_BUILD_USER=shriyansh.agnihotri
 export AWS_V3_SERVER=https://10.5.215.182:9440
 # export APLOS_BUILD_IP=10.4.96.150
 export LC_ALL=en_US.UTF-8
@@ -32,7 +36,13 @@ if [ $HOST = "tanmay-kakkar-2.eng.nutanix.com" ]; then
     export CCACHE_DIR=$HOME/.ccache
     export NX_YUM_HOST=endor.dyn.nutanix.com
     export NX_YUM_PATH=yum
+else
+    export TOOLCHAIN_WITH_ARCH=${HOME}/Codebases/toolchain-builds/dc63f9eb80c5102ed218cd5f9f5cd21fa4e401b7.x86_64
+    export TOP=~/Codebases/main
 fi
+
+export TOOLCHAIN_WITH_ARCH=${HOME}/Codebases/toolchain-builds/dc63f9eb80c5102ed218cd5f9f5cd21fa4e401b7.x86_64
+export TOP=~/Codebases/main
 
 source /usr/bin/virtualenvwrapper.sh &> /dev/null || source /usr/local/bin/virtualenvwrapper.sh &> /dev/null 
 
@@ -83,7 +93,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(sudo git virtualenv python fedora autopep8 pip supervisor arcanist zsh-syntax-highlighting zsh-256color alias-tips zsh-completions zsh-autosuggestions alias-tips vundle yum virtualenv virtualenvwrapper ssh-agent notify docker)
+plugins=(sudo git virtualenv python fedora autopep8 pip supervisor arcanist zsh-256color alias-tips zsh-completions zsh-autosuggestions alias-tips vundle yum virtualenv virtualenvwrapper ssh-agent notify docker almostontop autoupdate auto-notify zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -590,3 +600,4 @@ function straceall {
 . $HOME/.zsh/plugins/bd/bd.zsh
 
 export CALM=/calm
+workon calm
