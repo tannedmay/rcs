@@ -46,6 +46,32 @@ export TOP=~/Codebases/main
 
 source /usr/bin/virtualenvwrapper.sh &> /dev/null || source /usr/local/bin/virtualenvwrapper.sh &> /dev/null 
 
+die() {
+    echo "ERROR: $@"
+    echo "Exiting..."
+    exit 1
+}
+
+clean_idf_data() {
+    echo "Stopping the cluster services.."
+    cluster stop || die "Unable to stop cluster services"
+    echo DynamicRingChangerService  | zkwrite /appliance/logical/genesis/stop_service || die "Failed to set DynamicRingChangerService break point"
+    # cluster start && cluster stop
+    stargate_dir=$(df -h|grep stargate-storage|awk '{print $6}') || die "Unable to locate stargate-storage"
+    echo "Deleting data.."
+    rm -rf $stargate_dir/metadata/cassandra/data/insights/* || die "Failed in deleting insights data" 
+    rm -rf $stargate_dir/metadata/cassandra/data/insights_metric_data/* || die "Failed in deleting insights metric data"
+    echo "Done"
+    echo ""  | zkwrite /appliance/logical/genesis/stop_service || die "Failed to remove break point"
+    cluster start || die "Failed to start cluster services"
+}
+
+upgrade_pc() {
+    echo "Upgrading to $1"
+    tar xvf $1 && cd install && ./bin/cluster -i . -p upgrade || die "Upgrade failed"
+    echo "Done"
+}
+
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
@@ -96,6 +122,7 @@ ZSH_THEME="agnoster"
 plugins=(sudo git virtualenv python fedora autopep8 pip supervisor arcanist zsh-256color alias-tips zsh-completions zsh-autosuggestions alias-tips vundle yum virtualenv virtualenvwrapper ssh-agent notify docker almostontop autoupdate auto-notify zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
+workon calmtest
 
 export PATH=/calm/bin:$PATH
 export ERGON_COMPONENT_NAME='Calm-Hercules-Tanmay'
@@ -595,6 +622,17 @@ function straceall {
     inargs=$(ps aux|grep $to_grep|awk '{print $2}'|sed ':a;N;$!ba;s/\n/ /g'|sed 's/\([0-9]*\)/-p \1/g')
     strace $(echo $inargs)
 }
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+export PATH="/usr/local/opt/ncurses/bin:$PATH"
+export GOVC_URL=https://10.46.1.214
+export GOVC_USERNAME=administrator@vsphere.local
+export GOVC_PASSWORD=Nutanix/4u
+export GOVC_INSECURE=true
+export browser='chrome'
+export CHROME_PATH="$HOME/Sources/chromedriver"
+export PYTHONDONTWRITEBYTECODE=1
 
 # zsh-bd
 . $HOME/.zsh/plugins/bd/bd.zsh
