@@ -1,4 +1,4 @@
-export WORKSPACE=$HOME/Codebases
+export WORKSPACE=$HOME
 
 # Load the 'init.sh'.
 source $WORKSPACE/rcs/zshrc/init.sh # find all '.sh' files in zshrc, exclude 'init.sh'.

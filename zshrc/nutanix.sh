@@ -26,19 +26,20 @@ export ENABLE_APLOS=false
 export DISABLE_SSL_ROUTE=true
 export UI_MODE=dev
 export LANG=en_US.utf8
-export APLOS_BUILD_IP=localhost
+# export APLOS_BUILD_IP=10.48.210.96
+export APLOS_BUILD_IP=10.48.219.6
 export APLOS_BUILD_USER=nutanix
 export ZOOKEEPER_HOST_PORT_LIST=zk1:9876
 export PATH=$PATH:/usr/local/go/bin:/usr/pgsql-11/bin/
 export PATH=$PATH:$HOME/.go/bin:$TOP/.go/bin
-export REQUESTS_CA_BUNDLE=/root/pypi.crt
+export REQUESTS_CA_BUNDLE=$WORKSPACE/pypi.crt
 export PYTHONPATH=$PYTHONPATH:$TOP/build/.python/nutanix_gateway-server.egg:$TOP/build/.python/nutanix_gateway-client.egg:$TOP/build/.python/nutanix_serviceability-client.egg:$TOP/build/.python/nutanix_ctrl-plane-client.egg:$TOP/build/.python/nutanix_ctrl-plane-pc-client.egg:$TOP/build/.python/nutanix_cdp-pc-client.egg
-export APLOS_BUILD_IP=10.48.221.179
-export APLOS_BUILD_USER=nutanix
 
 # Arcanist stuff
 arcpath=$WORKSPACE/arc
 export PATH=${arcpath}/arcanist/bin:$PATH
-if [ -f ${arcpath}/arcanist/resources/shell/bash-completion ]; then
-    source ${arcpath}/arcanist/resources/shell/bash-completion
+if [ -f "${arcpath}/arcanist/resources/shell/bash-completion" ]; then
+    source "${arcpath}/arcanist/resources/shell/bash-completion"
 fi
+
+export PATH=$WORKSPACE/calm/arcanist_extension/nulint/nulint:$PATH
