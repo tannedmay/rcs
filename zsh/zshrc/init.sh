@@ -10,7 +10,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+alias python=python3
 plugins=(sudo git virtualenv python autopep8 pip supervisor arcanist zsh-256color alias-tips zsh-completions zsh-autosuggestions alias-tips vundle yum ssh-agent docker autoupdate zsh-syntax-highlighting autoswitch_virtualenv)
 
 source $ZSH/oh-my-zsh.sh
-export AUTOSWITCH_DEFAULTENV="calm"
