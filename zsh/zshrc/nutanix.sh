@@ -42,4 +42,4 @@ if [ -f "${arcpath}/arcanist/resources/shell/bash-completion" ]; then
     source "${arcpath}/arcanist/resources/shell/bash-completion"
 fi
 
-export PATH=$WORKSPACE/calm/arcanist_extension/nulint/nulint:$PATH
+export PATH=$WORKSPACE/calm/arcanist_extension/nulint:$PATH
