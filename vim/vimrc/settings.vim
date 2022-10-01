@@ -31,6 +31,7 @@ set wildmode=longest:full
 set wildmenu
 set noswapfile
 set backspace=indent,eol,start
+set statusline+=%F
 "
 " color theme in vim
 set background=dark
