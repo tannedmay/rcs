@@ -60,6 +60,9 @@ Plug 'haya14busa/incsearch.vim'
 " GO programming plugin
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
+" ripgrep plugin
+Plug 'jremmen/vim-ripgrep'
+
 call plug#end()
 
 " tagbar conf
@@ -183,6 +186,7 @@ let g:SimpylFold_fold_import = 1
 " ctrlp ignore
 set wildignore+=*.pyc     " MacOSX/Linux
 set wildignore+=*.html     " MacOSX/Linux
+let g:ctrlp_extensions = ['tag']
 
 " tinymode conf - resize current window mode
 call tinymode#EnterMap("winsize", "ws", "") 
@@ -202,5 +206,8 @@ let g:indentLine_char = '┊'
 let g:pydocstring_templates_path = "$WORKSPACE/vim/pydocstring/"
 let g:pydocstring_templates_dir = "$WORKSPACE/vim/pydocstring/"
 
+" ripgrep
+let g:rg_derive_root = 'true'
+"
 " Close the tab if NERDTree is the only window remaining in it.
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
