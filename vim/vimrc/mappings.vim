@@ -15,13 +15,6 @@ nmap <silent> <S-Down> :wincmd j<CR>
 nmap <silent> <S-Left> :wincmd h<CR>
 nmap <silent> <S-Right> :wincmd l<CR>
 
-" nnoremap <C-J> <C-W><C-J>
-" nnoremap <C-K> <C-W><C-K>
-" nnoremap <C-L> <C-W><C-L>
-" nnoremap <C-H> <C-W><C-H>
-
-nnoremap <C-B> :TagbarOpen<CR>
-
 nnoremap <F3> <ESC>:NERDTreeToggle<CR>
 nnoremap <F4> <ESC>:TagbarToggle<CR>
 nnoremap <F6> :source ~/.vimrc<CR>
@@ -31,9 +24,6 @@ vnoremap <space> zf
 
 nnoremap <NUL> zi
 vnoremap <NUL> zi
-
-nnoremap <leader>b  <ESC>:IpdbBreakPointBelow<CR>
-nnoremap <leader>B  <ESC>:IpdbBreakPointAbove<CR>
 
 map <C-Q> <ESC>:Bclose<CR>
 
@@ -49,14 +39,9 @@ nnoremap <C-E> <Esc>:SyntasticCheck<CR>
 
 nnoremap <F7> <Esc>:HardTimeToggle<CR>
 
-nmap <silent> <C-_> <Plug>(pydocstring)
-
 map z/ <Plug>(incsearch-fuzzy-/)
 map z? <Plug>(incsearch-fuzzy-?)
 map zg/ <Plug>(incsearch-fuzzy-stay)
-
-" invoke with '-'
-nmap  -  <Plug>(choosewin)
 
 " use <tab> for trigger completion and navigate to the next complete item
 function! CheckBackspace() abort
@@ -73,9 +58,8 @@ inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
 inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
 inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
-:command! IpdbBreakPointBelow :normal oimport ipdb; ipdb.set_trace()<ESC>
-:command! IpdbBreakPointAbove :normal Oimport ipdb; ipdb.set_trace()<ESC>
-
 :command! S :Subvert
 
 :command! Q :q
+
+:autocmd FileType qf nmap <buffer> <cr> <cr>:lcl<cr>
