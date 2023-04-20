@@ -55,7 +55,7 @@ Plug 'heavenshell/vim-pydocstring', { 'do': 'make install', 'for': 'python' }
 Plug 'tpope/vim-abolish'
 
 " incsearch.vim incrementally highlights ALL pattern matches unlike default 'incsearch'.
-Plug 'haya14busa/incsearch.vim'
+" Plug 'haya14busa/incsearch.vim'
 
 " GO programming plugin
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -63,7 +63,18 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " ripgrep plugin
 Plug 'jremmen/vim-ripgrep'
 
+" CSV support
 Plug 'chrisbra/csv.vim'
+
+" Golang debugger
+Plug 'sebdah/vim-delve'
+
+" Split code or join single line code
+Plug 'AndrewRadev/splitjoin.vim'
+
+Plug 'SirVer/ultisnips'
+
+Plug 'vim-test/vim-test'
 call plug#end()
 
 " " tagbar conf
@@ -213,6 +224,18 @@ let g:rg_derive_root = 'true'
 let g:csv_delim='\t'
 let g:csv_autocmd_arrange=1
 
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+let g:UltiSnipsListSnippets = "<c-h>"
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
+
+" let test#go#gotest#executable = 'go test -v $(go list ./... | grep -v actual)'
 "
+" function! CustomAlternateFile(cmd)
+"     return "test_file_spec.rb"
+" endfunction
+"
+" let g:test#custom_alternate_file = function('CustomAlternateFile')
 " Close the tab if NERDTree is the only window remaining in it.
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif

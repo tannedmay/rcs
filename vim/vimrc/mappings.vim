@@ -14,6 +14,7 @@ nmap <silent> <S-Up> :wincmd k<CR>
 nmap <silent> <S-Down> :wincmd j<CR>
 nmap <silent> <S-Left> :wincmd h<CR>
 nmap <silent> <S-Right> :wincmd l<CR>
+nmap <silent> <S-q> :wincmd c<CR>
 
 nnoremap <F3> <ESC>:NERDTreeToggle<CR>
 nnoremap <F4> <ESC>:TagbarToggle<CR>
@@ -28,20 +29,18 @@ vnoremap <NUL> zi
 map <C-Q> <ESC>:Bclose<CR>
 
 " ctrl + s save
-silent !stty -ixon > /dev/null 2>/dev/null
-imap <C-S> <ESC>:w<CR>
-vmap <C-S> <ESC>:w<CR>
-nmap <C-S> :w<CR>
+" silent !stty -ixon > /dev/null 2>/dev/null
+" imap <C-S> <ESC>:w<CR>
+" vmap <C-S> <ESC>:w<CR>
+" nmap <C-S> :w<CR>
+
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
 
 :nnoremap <CR> :nohlsearch<CR><CR>
 
 nnoremap <C-E> <Esc>:SyntasticCheck<CR>
-
-nnoremap <F7> <Esc>:HardTimeToggle<CR>
-
-map z/ <Plug>(incsearch-fuzzy-/)
-map z? <Plug>(incsearch-fuzzy-?)
-map zg/ <Plug>(incsearch-fuzzy-stay)
 
 " use <tab> for trigger completion and navigate to the next complete item
 function! CheckBackspace() abort
@@ -61,5 +60,8 @@ inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 :command! S :Subvert
 
 :command! Q :q
+
+nmap <silent> <leader>t :TestFile<CR>
+nmap <silent> <leader>at :TestSuite<CR>
 
 :autocmd FileType qf nmap <buffer> <cr> <cr>:lcl<cr>

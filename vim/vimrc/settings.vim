@@ -62,3 +62,6 @@ autocmd! bufwritepost .vimrc source %
 
 " hi Folded ctermfg=white
 hi Folded ctermbg=236
+
+set splitbelow
+set splitright
