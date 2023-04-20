@@ -13,7 +13,6 @@ snippet todo "todo comment" b
 // TODO: ${2:Tanmay} `date -I` ${1:desc}
 endsnippet
 
-
 snippet log "log statement" b
 logger.Log(p.Error, "${1:invalid value}"
 endsnippet
@@ -33,6 +32,16 @@ endsnippet
 # snippet ctx "ctx params" i
 # ctx context.Context, di deps.DI,
 # endsnippet
+
+snippet rtest "Test router" b
+func Test${1:NAME}(t *testing.T) {
+	e := setup()
+
+	NewRouteTester[entity.Success](t, e, "${2:ENDPOINT}").
+		Get("get book").Status(200)
+		$0
+}
+endsnippet
 
 snippet ftest "Test function"
 func Test${1:NAME}(t *testing.T) {

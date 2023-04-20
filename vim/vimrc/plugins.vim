@@ -75,6 +75,9 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'SirVer/ultisnips'
 
 Plug 'vim-test/vim-test'
+
+" fork from ton/vim-alternate
+Plug 'tannedmay/vim-alternate'
 call plug#end()
 
 " " tagbar conf
@@ -230,12 +233,14 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 let g:UltiSnipsListSnippets = "<c-h>"
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 
-" let test#go#gotest#executable = 'go test -v $(go list ./... | grep -v actual)'
-"
-" function! CustomAlternateFile(cmd)
-"     return "test_file_spec.rb"
-" endfunction
-"
-" let g:test#custom_alternate_file = function('CustomAlternateFile')
+let g:AlternateExtensionMappings = [{'.go' : '_test.go', '_test.go' : '.go'}]
+let g:AlternatePaths = ['./test', '../', './internal/test', './']
+
+function! CustomAlternateFile()
+    return g:AlternateFile()
+endfunction
+
+let g:test#custom_alternate_file = function('CustomAlternateFile')
+
 " Close the tab if NERDTree is the only window remaining in it.
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif

@@ -28,21 +28,20 @@ let g:go_debug_mappings = {
 \}
 
 " Golang shortcuts- https://gist.github.com/krlvi/d22bdcb66566261ea8e8da36f796fa0a
-autocmd FileType go nmap <leader>e <Plug>(go-iferr)
 autocmd FileType go nmap <leader>r  <Plug>(go-rename)
-autocmd FileType go nmap <leader>t  <Plug>(go-test-func)
 autocmd FileType go nmap <leader>v  <Plug>(go-alternate-edit)
 autocmd FileType go nmap <leader>i  :GoImpl<CR>
-autocmd FileType go nmap <leader>I  :GoImplements<CR>
-autocmd FileType go nmap <leader>h  <Plug>(go-referrers)
 autocmd FileType go nmap <leader>k :GoKeyify<CR>
 autocmd FileType go nmap <leader>a :GoAddTags<CR>
 autocmd FileType go nmap <leader>f :GoFillStruct<CR>
+autocmd FileType go nmap <leader>b :GoBuild $TOP/main<CR>
+autocmd FileType go nmap <leader>r :GoRun -C $TOP $TOP/main<CR>
 
-" autocmd FileType go nmap c <Plug>(go-debug-continue)
+autocmd FileType go nmap gi  :GoImplements<CR>
+autocmd FileType go nmap gh  <Plug>(go-referrers)
 autocmd FileType go nmap q <Plug>(go-debug-stop)
 autocmd FileType go nmap b <Plug>(go-debug-breakpoint)
 autocmd FileType go nmap m <Plug>(go-debug-next)
 autocmd FileType go nmap s <Plug>(go-debug-step)
 autocmd FileType go nmap <leader>d :GoDebugTest<CR>
-autocmd FileType go nmap <leader>b :GoDebugBreakpoint<CR>
+autocmd FileType go nmap <leader>br :GoDebugBreakpoint<CR>

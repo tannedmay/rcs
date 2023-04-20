@@ -64,4 +64,6 @@ inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 nmap <silent> <leader>t :TestFile<CR>
 nmap <silent> <leader>at :TestSuite<CR>
 
+nmap <silent> ga :Alternate<CR>
+
 :autocmd FileType qf nmap <buffer> <cr> <cr>:lcl<cr>
