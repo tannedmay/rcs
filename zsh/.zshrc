@@ -1,8 +1,8 @@
-export WORKSPACE=$HOME/workspace
+export WORKSPACE=$HOME/Developer
 export TOP=$WORKSPACE/api-app/
-export VIM_TOP=$WORKSPACE/rcs/vim/vimrc/
-export ZSH_TOP=$WORKSPACE/rcs/zsh/zshrc/
-export RC_TOP=$WORKSPACE/rcs/
+export VTOP=$WORKSPACE/rcs/vim/vimrc/
+export ZTOP=$WORKSPACE/rcs/zsh/zshrc/
+export RTOP=$WORKSPACE/rcs/
 
 # Load the 'init.sh'.
 source $WORKSPACE/rcs/zsh/zshrc/init.sh # find all '.sh' files in zshrc, exclude 'init.sh'.

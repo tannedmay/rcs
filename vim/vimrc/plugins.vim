@@ -7,7 +7,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-fugitive'
 
 " alternative to taglist - tagbar
-" Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 
 " show directory struction- :help nerdtree
 Plug 'scrooloose/nerdtree'
@@ -20,9 +20,6 @@ Plug 'vim-airline/vim-airline'
 
 " fullsize a window <C-w>o
 Plug 'taylor/vim-zoomwin'
-
-" fold accurately python
-Plug 'tmhedberg/SimpylFold'
 
 " proper indentation 
 Plug 'vim-scripts/indentpython.vim'
@@ -86,88 +83,45 @@ Plug 'tpope/vim-dispatch'
 Plug 'kamykn/spelunker.vim'
 call plug#end()
 
-" " tagbar conf
-" let g:tagbar_type_vimwiki = {
-"             \ 'ctagstype' : 'wiki',
-"             \ 'kinds'     : [
-"             \ 'h:headers'
-"             \ ]
-"             \ }
-" let g:tagbar_type_mkd= {
-"             \ 'ctagstype' : 'md',
-"             \ 'kinds' : [
-"             \ 'h:headings'
-"             \ ],
-"             \ 'sort' : 0,
-"             \ }
-" let g:tagbar_type_css= {
-"             \ 'ctagstype' : 'css',
-"             \ 'kinds' : [
-"             \ 'c:classes',
-"             \ 'i:ids',
-"             \ 't:tags',
-"             \ 'm:media',
-"             \ 'f:fonts',
-"             \ 'k:keyframes'
-"             \ ],
-"             \ 'sort' : 0,
-"             \ }
-" let g:tagbar_type_html= {
-"             \ 'ctagstype' : 'html',
-"             \ 'kinds'     : [
-"             \ 'i:ids',
-"             \ 'c:classes',
-"             \ ]
-"             \ }
-" let g:tagbar_type_vhdl = {
-"             \ 'ctagstype': 'vhdl',
-"             \ 'kinds' : [
-"             \'d:prototypes',
-"             \'b:package bodies',
-"             \'e:entities',
-"             \'a:architectures',
-"             \'t:types',
-"             \'p:processes',
-"             \'f:functions',
-"             \'r:procedures',
-"             \'c:constants',
-"             \'T:subtypes',
-"             \'r:records',
-"             \'C:components',
-"             \'P:packages',
-"             \'l:locals'
-"             \]
-"             \}
-" let g:tagbar_type_go = {
-"             \ 'ctagstype' : 'go',
-"             \ 'kinds'     : [
-"                 \ 'p:package',
-"                 \ 'i:imports:1',
-"                 \ 'c:constants',
-"                 \ 'v:variables',
-"                 \ 't:types',
-"                 \ 'n:interfaces',
-"                 \ 'w:fields',
-"                 \ 'e:embedded',
-"                 \ 'm:methods',
-"                 \ 'r:constructor',
-"                 \ 'f:functions'
-"             \ ],
-"             \ 'sro' : '.',
-"             \ 'kind2scope' : {
-"                 \ 't' : 'ctype',
-"                 \ 'n' : 'ntype'
-"             \ },
-"             \ 'scope2kind' : {
-"                 \ 'ctype' : 't',
-"                 \ 'ntype' : 'n'
-"             \ },
-"             \ 'ctagsbin'  : 'gotags',
-"             \ 'ctagsargs' : '-sort -silent'
-"             \ }
-" let g:tagbar_autoclose_netrw = 1
-" let g:tagbar_autofocus = 1
-" let g:tagbar_autoclose = 1
+" tagbar conf
+let g:tagbar_type_mkd= {
+            \ 'ctagstype' : 'md',
+            \ 'kinds' : [
+            \ 'h:headings'
+            \ ],
+            \ 'sort' : 0,
+            \ }
+let g:tagbar_type_go = {
+	\ 'ctagstype' : 'go',
+	\ 'kinds'     : [
+		\ 'p:package',
+		\ 'i:imports:1',
+		\ 'c:constants',
+		\ 'v:variables',
+		\ 't:types',
+		\ 'n:interfaces',
+		\ 'w:fields',
+		\ 'e:embedded',
+		\ 'm:methods',
+		\ 'r:constructor',
+		\ 'f:functions'
+	\ ],
+	\ 'sro' : '.',
+	\ 'kind2scope' : {
+		\ 't' : 'ctype',
+		\ 'n' : 'ntype'
+	\ },
+	\ 'scope2kind' : {
+		\ 'ctype' : 't',
+		\ 'ntype' : 'n'
+	\ },
+	\ 'ctagsbin'  : 'gotags',
+	\ 'ctagsargs' : '-sort -silent'
+\ }
+
+let g:tagbar_autoclose_netrw = 1
+let g:tagbar_autofocus = 1
+let g:tagbar_autoclose = 1
 
 " python-syntax conf
 let python_highlight_all = 1
@@ -199,10 +153,6 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_loc_list_height=5
 let g:syntastic_check_on_open = 0
 let g:syntastic_aggregate_errors = 1
-
-" SimpylFold conf
-let g:SimpylFold_docstring_preview = 1
-let g:SimpylFold_fold_import = 1
 
 " ctrlp ignore
 set wildignore+=*.pyc     " MacOSX/Linux

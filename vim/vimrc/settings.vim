@@ -65,3 +65,5 @@ hi Folded ctermbg=236
 
 set splitbelow
 set splitright
+
+set foldnestmax=1
