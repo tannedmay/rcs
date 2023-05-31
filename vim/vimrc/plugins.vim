@@ -78,6 +78,12 @@ Plug 'vim-test/vim-test'
 
 " fork from ton/vim-alternate
 Plug 'tannedmay/vim-alternate'
+
+Plug 'yssl/QFEnter'
+
+Plug 'tpope/vim-dispatch'
+
+Plug 'kamykn/spelunker.vim'
 call plug#end()
 
 " " tagbar conf
@@ -235,6 +241,12 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 
 let g:AlternateExtensionMappings = [{'.go' : '_test.go', '_test.go' : '.go'}]
 let g:AlternatePaths = ['./test', '../', './internal/test', './']
+
+let test#strategy = {
+  \ 'nearest': 'basic',
+  \ 'file':    'dispatch',
+  \ 'suite':   'dispatch',
+\}
 
 function! CustomAlternateFile()
     return g:AlternateFile()

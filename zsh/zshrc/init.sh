@@ -24,6 +24,6 @@ POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 alias python=python3
-plugins=(git sudo virtualenv python autopep8 pip supervisor arcanist zsh-256color alias-tips zsh-completions zsh-autosuggestions alias-tips vundle yum ssh-agent docker autoupdate zsh-syntax-highlighting autoswitch_virtualenv)
+plugins=(git sudo virtualenv python autopep8 pip supervisor arcanist zsh-256color alias-tips zsh-completions zsh-autosuggestions alias-tips vundle yum ssh-agent docker autoupdate zsh-syntax-highlighting autoswitch_virtualenv git-auto-fetch)
 
 source $ZSH/oh-my-zsh.sh

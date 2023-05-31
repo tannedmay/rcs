@@ -35,7 +35,8 @@ autocmd FileType go nmap <leader>k :GoKeyify<CR>
 autocmd FileType go nmap <leader>a :GoAddTags<CR>
 autocmd FileType go nmap <leader>f :GoFillStruct<CR>
 autocmd FileType go nmap <leader>b :GoBuild $TOP/main<CR>
-autocmd FileType go nmap <leader>r :GoRun -C $TOP $TOP/main<CR>
+autocmd FileType go nmap <leader>n :GoRun -C $TOP $TOP/main<CR>
+autocmd FileType go nmap <leader>c :GoErrCheck<CR>
 
 autocmd FileType go nmap gi  :GoImplements<CR>
 autocmd FileType go nmap gh  <Plug>(go-referrers)

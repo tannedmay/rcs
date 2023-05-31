@@ -1,5 +1,5 @@
-export WORKSPACE=$HOME/Developer
-export TOP=$WORKSPACE/PAF/api-app/
+export WORKSPACE=$HOME/workspace
+export TOP=$WORKSPACE/api-app/
 export VIM_TOP=$WORKSPACE/rcs/vim/vimrc/
 export ZSH_TOP=$WORKSPACE/rcs/zsh/zshrc/
 export RC_TOP=$WORKSPACE/rcs/
@@ -16,4 +16,3 @@ done
 
 # vicmd zsh key bind. In shell you can use vicmd
 bindkey -v
-

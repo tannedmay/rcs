@@ -34,9 +34,6 @@ map <C-Q> <ESC>:Bclose<CR>
 " vmap <C-S> <ESC>:w<CR>
 " nmap <C-S> :w<CR>
 
-map <C-n> :cnext<CR>
-map <C-m> :cprevious<CR>
-nnoremap <leader>a :cclose<CR>
 
 :nnoremap <CR> :nohlsearch<CR><CR>
 
@@ -61,9 +58,15 @@ inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
 :command! Q :q
 
-nmap <silent> <leader>t :TestFile<CR>
+nmap <silent> <leader>t :TestLast<CR>
+nmap <silent> <leader>ft :TestFile<CR>
 nmap <silent> <leader>at :TestSuite<CR>
+nmap <silent> <leader>nt :TestNearest<CR>
 
 nmap <silent> ga :Alternate<CR>
+
+map cn :cnext<CR>
+map cp :cprev<CR>
+nnoremap cq :cclose<CR>
 
 :autocmd FileType qf nmap <buffer> <cr> <cr>:lcl<cr>
