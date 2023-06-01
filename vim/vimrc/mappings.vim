@@ -15,6 +15,7 @@ nmap <silent> <S-Down> :wincmd j<CR>
 nmap <silent> <S-Left> :wincmd h<CR>
 nmap <silent> <S-Right> :wincmd l<CR>
 nmap <silent> <S-q> :wincmd c<CR>
+nmap <silent> <S-f> :NERDTreeClose<CR> :TagbarClose<CR>
 
 nnoremap <F3> <ESC>:NERDTreeToggle<CR>
 nnoremap <F4> <ESC>:TagbarToggle<CR>

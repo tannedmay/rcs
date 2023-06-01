@@ -9,12 +9,18 @@ if err != nil {
 }
 endsnippet
 
+snippet nerr "New error"
+	err := entity.NewError(entity.ErrorCodeBadRequest, "${2:invalid value}")
+	logger.Log(p.Error, err.Error())
+	return nil, err
+endsnippet
+
 snippet todo "todo comment" b
 // TODO: ${2:Tanmay} `date -I` ${1:desc}
 endsnippet
 
 snippet log "log statement" b
-logger.Log(p.Error, "${1:invalid value}"
+logger.Log(p.Error, "${1:invalid value}")
 endsnippet
 
 snippet logger "Get logger from ctx" b
@@ -23,6 +29,10 @@ endsnippet
 
 snippet userId "Get userId from ctx" b
 userId := rctx.AuthUserIdFromContext(ctx)
+endsnippet
+
+snippet memberId "Get memberId from ctx" b
+memberId := rctx.AuthUserIdFromContext(ctx)
 endsnippet
 
 snippet rctx "pass context with logger" i

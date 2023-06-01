@@ -36,12 +36,19 @@ autocmd FileType go nmap <leader>a :GoAddTags<CR>
 autocmd FileType go nmap <leader>f :GoFillStruct<CR>
 autocmd FileType go nmap <leader>b :GoBuild $TOP/main<CR>
 autocmd FileType go nmap <leader>n :GoRun -C $TOP $TOP/main<CR>
-autocmd FileType go nmap <leader>c :GoErrCheck<CR>
+autocmd FileType go nmap <leader>c :GoMetaLinter<CR>
 
+autocmd FileType go nmap <C-j> :GoDecls<cr>
+autocmd FileType go nmap <C-k> :GoDeclsDir<cr>
+
+autocmd FileType go nmap gd  :GoDef<CR>
+autocmd FileType go nmap gb  <C-t>
+autocmd FileType go nmap gy  :GoDefType<CR>
 autocmd FileType go nmap gi  :GoImplements<CR>
-autocmd FileType go nmap gh  <Plug>(go-referrers)
+autocmd FileType go nmap gr  <Plug>(go-referrers)
+autocmd FileType go nmap gdoc  :GoDocBrowser<CR>
 autocmd FileType go nmap q <Plug>(go-debug-stop)
-autocmd FileType go nmap b <Plug>(go-debug-breakpoint)
+autocmd FileType go nmap br <Plug>(go-debug-breakpoint)
 autocmd FileType go nmap m <Plug>(go-debug-next)
 autocmd FileType go nmap s <Plug>(go-debug-step)
 autocmd FileType go nmap <leader>d :GoDebugTest<CR>

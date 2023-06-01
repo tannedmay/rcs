@@ -69,17 +69,22 @@ Plug 'sebdah/vim-delve'
 " Split code or join single line code
 Plug 'AndrewRadev/splitjoin.vim'
 
+" snippet repeated
 Plug 'SirVer/ultisnips'
 
+" Run testcases
 Plug 'vim-test/vim-test'
 
 " fork from ton/vim-alternate
 Plug 'tannedmay/vim-alternate'
 
+" quickfix movement
 Plug 'yssl/QFEnter'
 
+" dispatch task
 Plug 'tpope/vim-dispatch'
 
+" Spell check
 Plug 'kamykn/spelunker.vim'
 call plug#end()
 
@@ -203,6 +208,8 @@ function! CustomAlternateFile()
 endfunction
 
 let g:test#custom_alternate_file = function('CustomAlternateFile')
+
+let g:spelunker_white_list_for_user = ['vimrc']
 
 " Close the tab if NERDTree is the only window remaining in it.
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
