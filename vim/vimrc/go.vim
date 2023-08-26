@@ -35,6 +35,7 @@ autocmd FileType go nmap <leader>k :GoKeyify<CR>
 autocmd FileType go nmap <leader>a :GoAddTags<CR>
 autocmd FileType go nmap <leader>f :GoFillStruct<CR>
 autocmd FileType go nmap <leader>b :GoBuild $TOP/main<CR>
+autocmd FileType go nmap <leader>ba :GoBuild $TOP/main<CR> :GoBuild $TOP/main/mq_subscriber<CR> :GoBuild $TOP/scripts<CR>
 autocmd FileType go nmap <leader>n :GoRun -C $TOP $TOP/main<CR>
 autocmd FileType go nmap <leader>c :GoMetaLinter<CR>
 
