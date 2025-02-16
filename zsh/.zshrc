@@ -9,3 +9,5 @@ FILES=($(echo $FILES_STR | tr '\n' ' '))
 for FILE in $FILES; do
     source $FILE
 done
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

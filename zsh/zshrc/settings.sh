@@ -1,2 +1,4 @@
-# vicmd zsh key bind. In shell you can use vicmd
-bindkey -v
+# Add settings
+#
+# export AWS_DEFAULT_PROFILE=dev
+export AWS_DEFAULT_PROFILE=prod

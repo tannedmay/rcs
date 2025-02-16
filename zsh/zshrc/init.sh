@@ -4,3 +4,9 @@
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
+# vicmd zsh key bind. In shell you can use vicmd
+# bindkey -v
+# bindkey '^[[A' up-line-or-search
+# bindkey '^[[B' down-line-or-search
+#

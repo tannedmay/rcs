@@ -68,3 +68,4 @@ set splitright
 
 set foldnestmax=1
 set spellfile=$WORKSPACE/rcs/vim/spell/en.utf-8.add
+set aw

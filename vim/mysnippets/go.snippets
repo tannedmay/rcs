@@ -4,14 +4,28 @@ priority -10
 
 snippet err "If error"
 if err != nil {
-	logger.Log(p.Error, err.Error())
+	logger.Log(p.ErrorCode, err.Code(), p.Error, err.Error())
 	return nil, err
 }
 endsnippet
 
+snippet ptr "Complete ptr import" b
+ptr "acharyaprashant.org/api-vidya/utils/pointer"
+endsnippet
+
+
+snippet clientType "get client type from ctx" b
+clientType := rctx.ClientTypeFromContext(ctx)
+endsnippet
+
+snippet cmId "get cmId from ctx" b
+cmId := rctx.CMIdFromContext(ctx)
+endsnippet
+
+
 snippet nerr "New error"
 	err := entity.NewError(entity.ErrorCodeBadRequest, "${2:invalid value}")
-	logger.Log(p.Error, err.Error())
+	logger.Log(p.ErrorCode, err.Code(), p.Error, err.Error())
 	return nil, err
 endsnippet
 
@@ -20,7 +34,7 @@ snippet todo "todo comment" b
 endsnippet
 
 snippet log "log statement" b
-logger.Log(p.Error, "${1:invalid value}")
+logger.Log(p.ErrorCode, err.Code(), p.Error, "${1:invalid value}")
 endsnippet
 
 snippet logger "Get logger from ctx" b
@@ -200,7 +214,7 @@ snippet dbget "DB get usage"
 ${1:Out}, err := db.Get[entity.${2:Entity}](rctx.WithLogger(ctx, logger), di.ProvideDB(),
 entity.Collection${3:Name}, ${4:DocId})
 if err != nil {
-	logger.Log(p.Error, err.Error())
+	logger.Log(p.ErrorCode, err.Code(), p.Error, err.Error())
 	return nil, err
 }
 endsnippet
@@ -210,20 +224,20 @@ ${1:Out}, err := db.Get[entity.${2:Entity}](rctx.WithLogger(ctx, logger), di.Pro
 if entity.IsNotFound(err) {
 	${5:NO_FOUND}
 } else if err != nil {
-	logger.Log(p.Error, err.Error())
+	logger.Log(p.ErrorCode, err.Code(), p.Error, err.Error())
 	return nil, err
 }
 endsnippet
 
-snippet errbad "bad err"
+snippet nerrb "bad err"
 err := entity.BadRequestError(${1:BAD})
-logger.Log(p.Error, err.Error())
+logger.Log(p.ErrorCode, err.Code(), p.Error, err.Error())
 return nil, err
 endsnippet
 
-snippet errinternal "internal err" 
+snippet nerri "internal err" 
 err := entity.NewInternalError(${1:err})
-logger.Log(p.Error, err.Error())
+logger.Log(p.ErrorCode, err.Code(), p.Error, err.Error())
 return nil, err
 endsnippet
 
@@ -246,5 +260,42 @@ func Get${1:Entity}s(
 	params["offset"] = offset
 
 	return query[entity.DB$1](rctx.WithLogger(ctx, logger), db, queryString, params, entity.QueryScanConsistencyNotRequired, nil)
+}
+endsnippet
+
+snippet mask "Create new value mask"
+type ${1:NAME}${2:Type} int
+
+const (
+	$1$2${3:TYPE1} $1$2 = iota + 1
+)
+
+type DB$1$2Mask struct {
+	Type  $1$2 `json:"type"`
+	Value interface{} `json:"value"`
+}
+
+type DB$1$$3 struct {
+}
+
+func (v *DB$1$2Mask) UnmarshalJSON(data []byte) error {
+	temp := struct {
+		Type $1$2 `json:"type"`
+	}{}
+	if err := json.Unmarshal(data, &temp); err != nil {
+		return err
+	}
+	v.Type = temp.Type
+	switch v.Type {
+		case $1$2$3:
+			var actualValue ValueTypeMaskValue[DB$1$$3]
+			if err := json.Unmarshal(data, &actualValue); err != nil {
+				return err
+			}
+			v.Value = actualValue.Value
+			default:
+				panic("Type " + strconv.Itoa(int(v.Type)) + " is not supported")
+			}
+	return nil
 }
 endsnippet

@@ -86,6 +86,9 @@ Plug 'tpope/vim-dispatch'
 
 " Spell check
 Plug 'kamykn/spelunker.vim'
+
+" fuzzy search fzf
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 call plug#end()
 
 " tagbar conf

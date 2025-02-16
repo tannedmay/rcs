@@ -10,6 +10,7 @@ let g:go_debug_windows = {
     \ 'vars':  'rightbelow 60vnew',
 \ }
 
+let g:go_fold_enable = ['block', 'import', 'varconst', 'package_comment']
 let g:go_term_enabled = 1
 let g:go_term_mode = "split"
 let g:go_term_height = 10
