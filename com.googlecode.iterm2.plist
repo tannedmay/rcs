@@ -6,6 +6,8 @@
 	<true/>
 	<key>AboutToPasteTabsWithCancel_selection</key>
 	<integer>0</integer>
+	<key>AllowClipboardAccess</key>
+	<true/>
 	<key>AlternateMouseScroll</key>
 	<true/>
 	<key>AutoHideTmuxClientSession</key>
@@ -989,6 +991,8 @@
 			<false/>
 			<key>Idle Code</key>
 			<integer>0</integer>
+			<key>Initial Text</key>
+			<string>tmux attach || tmux</string>
 			<key>Jobs to Ignore</key>
 			<array>
 				<string>rlogin</string>
@@ -1068,7 +1072,7 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Transparency</key>
-			<real>0.21266622340425531</real>
+			<real>0.019502160904255307</real>
 			<key>Unlimited Scrollback</key>
 			<true/>
 			<key>Use Bold Font</key>
@@ -5100,7 +5104,7 @@
 	<key>OpenNoWindowsAtStartup</key>
 	<false/>
 	<key>OpenTmuxWindowsIn</key>
-	<integer>0</integer>
+	<integer>2</integer>
 	<key>PasteSpecialRegex</key>
 	<string></string>
 	<key>PasteSpecialSubstitution</key>
@@ -5143,6 +5147,8 @@
 	<key>Print In Black And White</key>
 	<true/>
 	<key>QuitWhenAllWindowsClosed</key>
+	<false/>
+	<key>ShowSecureKeyboardEntryIndicator</key>
 	<false/>
 	<key>SmartPlacement</key>
 	<true/>

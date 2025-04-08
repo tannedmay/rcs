@@ -1,6 +1,9 @@
-export EDITOR="/usr/bin/vim"
+export EDITOR="subl -w"
 export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
 export PATH=$PATH:$HOME/bin
 export PATH=$PATH:/usr/local/go/bin:$WORKSPACE/bin
 # export ZSH_PLUGINS_ALIAS_TIPS_FORCE=1
+export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+export PATH="/Users/zazen/.local/bin:$PATH"
+export DEPLOY=$WORKSPACE/deploy/

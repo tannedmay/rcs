@@ -1,3 +1,7 @@
+alias kctx="kubectx"
+alias kns="kubens"
+# alias k="kubecolor"
+
 alias find_in_python="find ./ -name '*.py' -type f|xargs grep"
 alias find_in_java="find ./ -name '*.java' -type f|xargs grep"
 alias find_in_go="find ./ -name '*.go' -type f|xargs grep"
@@ -11,16 +15,13 @@ export VTOP=$WORKSPACE/rcs/vim/vimrc/
 export ZTOP=$WORKSPACE/rcs/zsh/zshrc/
 export RTOP=$WORKSPACE/rcs/
 
-alias vtop="cd $VTOP"
-alias ztop="cd $ZTOP"
-alias rtop="cd $RTOP"
+alias rcs="cd $RTOP"
 alias top="cd $TOP"
-alias uitop="cd $UITOP"
 alias ws="cd $WORKSPACE"
 alias secret='cd $WORKSPACE/secrets'
 alias members='cd $WORKSPACE/members/web-solutions'
 alias main='cd $WORKSPACE/main/web-solutions'
-alias deploy='cd $WORKSPACE/deploy'
+alias deploy='cd $DEPLOY'
 alias assignments='cd $WORKSPACE/assignments'
 alias data='cd $WORKSPACE/data'
 
